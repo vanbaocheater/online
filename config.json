@@ -1,6 +1,6 @@
 {
-  "expiry_date": "2026-12-31",
+  "expiry_date": "2026-8-27",
   "latest_version_code": 2,
-  "update_url": "https://raw.githubusercontent.com/USERNAME/REPOSITORY/main/libupdate.so",
+  "update_url": "https://raw.githubusercontent.com/vanbaocheater/online/22891f3424fe7ee7864dfc298993a7f8489dae52/libVanbao.so",
   "notice": "Update available!"
 }
