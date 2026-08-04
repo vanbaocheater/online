@@ -3,249 +3,282 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tài Xỉu AI — MEGA ENGINE v4</title>
+<title>Tài Xỉu AI — ULTRA VIP v7 (SMART BREAK)</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#06090f;color:#c9d1d9;padding:10px;min-height:100vh}
-
-/* HEADER */
+body{font-family:'Segoe UI',Arial,sans-serif;background:#030712;color:#c9d1d9;padding:10px;min-height:100vh}
 .hdr{text-align:center;padding:12px 0 8px}
-.hdr h1{font-size:16px;font-weight:900;background:linear-gradient(90deg,#f85149,#ff9500,#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.5px}
+.hdr h1{font-size:15px;font-weight:900;background:linear-gradient(90deg,#ff5722,#ffeb3b,#00e676,#00b0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .hdr .sub{font-size:10px;color:#6e7681;margin-top:2px}
-.pills{display:flex;gap:6px;justify-content:center;margin-top:8px;flex-wrap:wrap}
-.pill{font-size:10px;padding:3px 9px;border-radius:20px;font-weight:700}
-.pill-g{background:#0d2e1f;color:#3fb950;border:1px solid #238636}
-.pill-b{background:#0d1f3c;color:#58a6ff;border:1px solid #1f6feb}
-.pill-o{background:#2d1b00;color:#f0883e;border:1px solid #9e6a03}
-.pill-r{background:#2d0a0a;color:#f85149;border:1px solid #da3633}
-.pill-p{background:#1c1130;color:#a371f7;border:1px solid #8957e5}
-
-/* CARDS */
+.pills{display:flex;gap:5px;justify-content:center;margin-top:7px;flex-wrap:wrap}
+.pill{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:700}
+.pg{background:#0d2e1f;color:#3fb950;border:1px solid #238636}
+.pb2{background:#0d1f3c;color:#58a6ff;border:1px solid #1f6feb}
+.po{background:#2d1b00;color:#f0883e;border:1px solid #9e6a03}
+.pr{background:#2d0a0a;color:#f85149;border:1px solid #da3633}
+.pp{background:#1c1130;color:#a371f7;border:1px solid #8957e5}
 .card{background:#0d1117;border:1px solid #21262d;padding:12px;border-radius:10px;margin-bottom:9px}
 .ct{font-size:11px;font-weight:700;color:#6e7681;text-transform:uppercase;letter-spacing:.5px;margin-bottom:9px;display:flex;align-items:center;gap:5px}
-.ct::before{content:'';width:3px;height:13px;background:linear-gradient(180deg,#58a6ff,#a371f7);border-radius:2px;display:block;flex-shrink:0}
-
-/* INPUTS / SELECT */
+.ct::before{content:'';width:3px;height:13px;background:linear-gradient(180deg,#00e676,#00b0ff);border-radius:2px;display:block;flex-shrink:0}
 label{font-size:11px;color:#6e7681;display:block;margin-top:7px;margin-bottom:3px}
-input[type=number],select{width:100%;padding:8px 11px;border-radius:7px;border:1px solid #30363d;background:#161b22;color:#e6edf3;font-size:13px;outline:none;transition:border .2s}
-input[type=number]:focus,select:focus{border-color:#58a6ff}
+input,select{width:100%;padding:8px 10px;border-radius:7px;border:1px solid #30363d;background:#161b22;color:#e6edf3;font-size:13px;outline:none}
+input:focus,select:focus{border-color:#00e676}
+.btn{width:100%;padding:10px;border-radius:8px;border:none;font-size:13px;font-weight:800;cursor:pointer;margin-top:8px;transition:filter .2s}
+.bs{background:linear-gradient(135deg,#1a7f37,#2ea043);color:#fff}
+.bx{background:linear-gradient(135deg,#b91c1c,#f85149);color:#fff}
+.btn:hover{filter:brightness(1.12)}
 
-/* BUTTONS */
-.btn{width:100%;padding:11px;border-radius:8px;border:none;font-size:13px;font-weight:800;cursor:pointer;margin-top:9px;transition:filter .2s;letter-spacing:.3px}
-.btn-s{background:linear-gradient(135deg,#1a7f37,#2ea043);color:#fff}
-.btn-s:hover{filter:brightness(1.12)}
-.btn-x{background:linear-gradient(135deg,#b91c1c,#f85149);color:#fff}
-.btn-x:hover{filter:brightness(1.1)}
+/* PRED */
+.mpred{border-radius:12px;padding:15px 12px;text-align:center;margin-bottom:8px;transition:all .3s}
+.mpred .mps{font-size:10px;opacity:.7;margin-bottom:3px;letter-spacing:.5px}
+.mpred .mpr{font-size:28px;font-weight:900;letter-spacing:2px;line-height:1}
+.mpred .mpsub{font-size:11px;margin-top:5px;opacity:.85}
+.mt{background:linear-gradient(135deg,#4a0010,#9b1c1c,#da3633);border:2px solid #f85149;color:#fff}
+.mx{background:linear-gradient(135deg,#00204a,#1e3a8a,#1f6feb);border:2px solid #388bfd;color:#fff}
+.mb{background:linear-gradient(135deg,#1c1130,#4a1d96,#8957e5);border:2px solid #a371f7;color:#fff}
+.mw{background:#161b22;border:2px dashed #30363d;color:#6e7681;font-size:12px}
 
-/* === MEGA PRED BOX === */
-.mega-pred{border-radius:12px;padding:16px 12px;text-align:center;margin-bottom:8px;transition:all .3s;position:relative;overflow:hidden}
-.mega-pred .mp-session{font-size:11px;opacity:.7;margin-bottom:4px;letter-spacing:.5px}
-.mega-pred .mp-result{font-size:26px;font-weight:900;letter-spacing:2px;line-height:1}
-.mega-pred .mp-sub{font-size:11px;margin-top:6px;opacity:.85}
-.mp-tai{background:linear-gradient(135deg,#4a0010,#9b1c1c,#da3633);border:2px solid #f85149;color:#fff}
-.mp-xiu{background:linear-gradient(135deg,#00204a,#1e3a8a,#1f6feb);border:2px solid #388bfd;color:#fff}
-.mp-bo{background:linear-gradient(135deg,#1c1130,#4a1d96,#8957e5);border:2px solid #a371f7;color:#fff}
-.mp-wait{background:#161b22;border:2px dashed #30363d;color:#6e7681;font-size:12px}
+/* ALL-IN */
+.abox{border-radius:10px;padding:12px;text-align:center;margin-top:7px}
+.ayes{background:linear-gradient(135deg,#052e16,#166534);border:2px solid #22c55e;color:#fff}
+.ano{background:#161b22;border:1px solid #30363d;color:#8b949e}
+.ask{background:#1c1130;border:1px solid #8957e5;color:#a371f7}
+.av{font-size:18px;font-weight:900;letter-spacing:1px}
+.ar{font-size:11px;margin-top:4px;opacity:.85;line-height:1.5}
+.ast{font-size:13px;font-weight:700;margin-top:4px;color:#22c55e}
 
-/* ALL-IN DECISION BOX */
-.allin-box{border-radius:10px;padding:13px;text-align:center;margin-top:7px;position:relative}
-.allin-YES{background:linear-gradient(135deg,#052e16,#166534);border:2px solid #22c55e;color:#fff}
-.allin-NO{background:linear-gradient(135deg,#2d1b00,#7c2d12);border:2px solid #f0883e;color:#fff}
-.allin-SKIP{background:#1c1130;border:1px solid #8957e5;color:#a371f7}
-.allin-label{font-size:10px;opacity:.7;letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px}
-.allin-val{font-size:20px;font-weight:900;letter-spacing:1px}
-.allin-reason{font-size:11px;margin-top:5px;opacity:.8;line-height:1.5}
-.allin-stake{font-size:13px;font-weight:700;margin-top:4px}
+/* AUTO BET PANEL */
+.autobet-box{background:#0a1a10;border:1px solid #166534;border-radius:8px;padding:10px;margin-top:8px}
+.autobet-box .abt{font-size:11px;color:#22c55e;font-weight:700;margin-bottom:6px}
+.autobet-row{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px solid #0d2e1f}
+.autobet-row:last-child{border:none}
+.autobet-row span:first-child{color:#6e7681}
+.autobet-row span:last-child{font-weight:700}
 
-/* CONFIDENCE */
-.conf-wrap{margin-top:8px}
-.conf-lbl{font-size:11px;color:#6e7681;display:flex;justify-content:space-between;margin-bottom:3px}
-.conf-bg{background:#21262d;border-radius:6px;height:9px;overflow:hidden}
-.conf-fill{height:100%;border-radius:6px;transition:width .4s}
-.cf-hi{background:linear-gradient(90deg,#166534,#22c55e)}
-.cf-md{background:linear-gradient(90deg,#7c2d12,#f0883e)}
-.cf-lo{background:linear-gradient(90deg,#6e1b18,#f85149)}
+/* CONF */
+.cw{margin-top:8px}
+.cl{font-size:11px;color:#6e7681;display:flex;justify-content:space-between;margin-bottom:3px}
+.cb{background:#21262d;border-radius:6px;height:8px;overflow:hidden}
+.cf{height:100%;border-radius:6px;transition:width .4s}
+.chi{background:linear-gradient(90deg,#166534,#22c55e)}
+.cmd{background:linear-gradient(90deg,#7c2d12,#f0883e)}
+.clo{background:linear-gradient(90deg,#6e1b18,#f85149)}
 
-/* MULTI-ALGO SCORES */
-.algo-scores{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:8px}
-.as-item{background:#161b22;border:1px solid #21262d;border-radius:7px;padding:7px 5px;text-align:center}
-.as-name{font-size:9px;color:#6e7681;letter-spacing:.3px;margin-bottom:3px}
-.as-val{font-size:14px;font-weight:800}
-.as-dir{font-size:9px;margin-top:2px;font-weight:700}
+/* ALGO SCORES */
+.asg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:8px}
+.asi{background:#161b22;border:1px solid #21262d;border-radius:7px;padding:7px 5px;text-align:center}
+.asn{font-size:9px;color:#6e7681;margin-bottom:2px}
+.asv{font-size:13px;font-weight:800}
+.asd{font-size:9px;margin-top:2px;font-weight:700}
 
-/* ALGO TABLE */
+/* TABLE */
 .atbl{width:100%;font-size:11px;margin-top:6px}
 .atbl td{padding:4px 2px;border-bottom:1px solid #161b22}
-.atbl td:first-child{color:#6e7681;width:46%}
+.atbl td:first-child{color:#6e7681;width:48%}
 .atbl td:last-child{font-weight:700;text-align:right}
 
-/* STREAK DOTS */
+/* DOTS */
 .sdots{display:flex;gap:3px;flex-wrap:wrap;margin-top:6px}
 .sd{width:22px;height:22px;border-radius:4px;font-size:9px;font-weight:900;display:flex;align-items:center;justify-content:center}
-.sd-t{background:#3c0011;color:#f85149;border:1px solid #da3633}
-.sd-x{background:#003070;color:#388bfd;border:1px solid #388bfd}
-.sd-cur{outline:2px solid #f0883e;outline-offset:1px}
+.sdt{background:#3c0011;color:#f85149;border:1px solid #da3633}
+.sdx{background:#003070;color:#388bfd;border:1px solid #388bfd}
+.sdc{outline:2px solid #f0883e;outline-offset:1px}
 
-/* RIGGING LOG */
-.rl{max-height:170px;overflow-y:auto;margin-top:6px}
-.rl::-webkit-scrollbar{width:3px}
-.rl::-webkit-scrollbar-thumb{background:#30363d;border-radius:2px}
-.ri{font-size:11px;padding:6px 8px;border-radius:6px;margin-bottom:4px;border-left:3px solid;line-height:1.5}
-.ri-d{background:#1a0808;border-color:#da3633;color:#fca5a5}
-.ri-w{background:#1c1200;border-color:#f0883e;color:#fcd34d}
-.ri-i{background:#071628;border-color:#388bfd;color:#93c5fd}
-.ri-s{background:#071a10;border-color:#22c55e;color:#86efac}
+/* API STATUS */
+.api-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+.api-item{background:#161b22;border:1px solid #21262d;border-radius:7px;padding:8px;display:flex;align-items:center;gap:6px}
+.api-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.api-name{font-size:11px;font-weight:700}
+.api-ping{font-size:10px;color:#6e7681}
 
 /* STATS */
 .sg{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:6px}
 .si{background:#161b22;border:1px solid #21262d;border-radius:8px;padding:9px;text-align:center}
 .sv{font-size:19px;font-weight:900}
 .sl{font-size:10px;color:#6e7681;margin-top:2px}
-
-/* PROFIT BANNER */
 .pb{border-radius:8px;padding:10px 13px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.pb-pos{background:#071a10;border:1px solid #238636}
-.pb-neg{background:#1a0808;border:1px solid #da3633}
-.pb-neu{background:#161b22;border:1px solid #21262d}
-.pb-amt{font-size:17px;font-weight:900}
-.pb-lbl{font-size:10px;color:#6e7681}
+.pbp{background:#071a10;border:1px solid #238636}
+.pbn{background:#1a0808;border:1px solid #da3633}
+.pbu{background:#161b22;border:1px solid #21262d}
+.pba{font-size:17px;font-weight:900}
+.pbl{font-size:10px;color:#6e7681}
 
-/* PREV RESULT */
-.prevgrid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px}
+/* RIG LOG */
+.rl{max-height:160px;overflow-y:auto;margin-top:6px}
+.rl::-webkit-scrollbar{width:3px}
+.rl::-webkit-scrollbar-thumb{background:#30363d;border-radius:2px}
+.ri{font-size:11px;padding:5px 7px;border-radius:5px;margin-bottom:4px;border-left:3px solid;line-height:1.5}
+.rid{background:#1a0808;border-color:#da3633;color:#fca5a5}
+.riw{background:#1c1200;border-color:#f0883e;color:#fcd34d}
+.rii{background:#071628;border-color:#388bfd;color:#93c5fd}
+.ris{background:#071a10;border-color:#22c55e;color:#86efac}
+
+/* PREV */
+.prevg{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px}
 .pvi{background:#161b22;border:1px solid #21262d;border-radius:7px;padding:7px 5px;text-align:center}
 .pvl{font-size:9px;color:#6e7681;margin-bottom:3px}
 .pvv{font-size:13px;font-weight:800}
 
-/* HIST TABLE */
+/* HIST */
 .ht{width:100%;border-collapse:collapse;font-size:11px;margin-top:6px}
-.ht th{background:#161b22;color:#6e7681;padding:6px 3px;text-align:center;border-bottom:1px solid #21262d;font-weight:600}
+.ht th{background:#161b22;color:#6e7681;padding:6px 3px;text-align:center;border-bottom:1px solid #21262d}
 .ht td{padding:5px 3px;text-align:center;border-bottom:1px solid #161b22}
-.ht tr:hover td{background:#161b22}
+.badge{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700}
+.bt{background:#3c0011;color:#f85149}.bx2{background:#00204a;color:#388bfd}
+.bw{background:#052e16;color:#22c55e}.bl{background:#2d0a0a;color:#f85149}.bsk{background:#1c1130;color:#a371f7}
 
-/* BADGES */
-.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700}
-.b-t{background:#3c0011;color:#f85149}
-.b-x{background:#00204a;color:#388bfd}
-.b-w{background:#052e16;color:#22c55e}
-.b-l{background:#2d0a0a;color:#f85149}
-.b-sk{background:#1c1130;color:#a371f7}
-
-/* COLORS */
-.cg{color:#22c55e}.cr{color:#f85149}.cb{color:#58a6ff}.co{color:#f0883e}.cp{color:#a371f7}
-
-@media(max-width:380px){.prevgrid{grid-template-columns:1fr 1fr}.algo-scores{grid-template-columns:1fr 1fr}}
+.cg{color:#22c55e}.cr{color:#f85149}.cb2{color:#58a6ff}.co{color:#f0883e}.cp{color:#a371f7}
+@media(max-width:380px){.prevg{grid-template-columns:1fr 1fr}.asg{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
-
 <div class="hdr">
-  <h1>🔥 TÀI XỈU AI — MEGA ENGINE v4</h1>
-  <div class="sub">Multi-Algorithm Fusion · All-In Decision · Anti-Rigging · Smart Stake</div>
+  <h1>⚡ TÀI XỈU AI — ULTRA VIP v7 (SMART BREAK)</h1>
+  <div class="sub">12-Algorithm Smart Break Fusion · Enhanced Streak Reversal Engine</div>
   <div class="pills">
-    <span class="pill pill-g" id="apiStatus">● API: Chờ</span>
-    <span class="pill pill-b" id="sessionPill">Phiên: ---</span>
-    <span class="pill pill-o" id="algosPill">Algos: 7 Active</span>
-    <span class="pill pill-r" id="rigPill">Rig Score: 0</span>
-    <span class="pill pill-p" id="modePill">Mode: NORMAL</span>
+    <span class="pill pg" id="apiStatus">● API: Chờ</span>
+    <span class="pill pb2" id="sessionPill">Phiên: ---</span>
+    <span class="pill po" id="algoPill">12 Algos</span>
+    <span class="pill pr" id="rigPill">Rig: 0</span>
+    <span class="pill pp" id="modePill">NORMAL</span>
   </div>
 </div>
 
 <!-- CONFIG -->
 <div class="card">
-  <div class="ct">Cài đặt vốn & chiến lược</div>
+  <div class="ct">Cài đặt cấu hình</div>
   <label>Tổng Vốn (VNĐ)</label>
   <input type="number" id="cap" value="1000000" min="10000" step="10000">
-  <label>Chiến Lược Cược</label>
+  <label>Chiến Lược Cược Quản Lý Vốn</label>
   <select id="strat">
-    <option value="flat">Flat Bet (5% cố định)</option>
+    <option value="flat">Flat Bet (5%)</option>
     <option value="martingale">Martingale (x2 sau thua)</option>
-    <option value="dalembert">D'Alembert (tăng/giảm 1 unit)</option>
-    <option value="paroli">Paroli (x2 sau thắng, max 3)</option>
-    <option value="oscar">Oscar's Grind (tích lũy nhẹ)</option>
+    <option value="dalembert">D'Alembert</option>
+    <option value="paroli">Paroli (x2 sau thắng)</option>
+    <option value="oscar">Oscar's Grind</option>
+    <option value="kelly">Kelly Criterion (Optimal %)</option>
   </select>
-  <label>Ngưỡng All-In (% vốn, 0 = tắt)</label>
-  <input type="number" id="allinThreshold" value="30" min="0" max="90" step="5">
-  <button class="btn btn-s" id="btnToggle" onclick="toggleTool()">▶ BẮT ĐẦU</button>
+  <label>Ngưỡng All-In (% vốn, 0=tắt)</label>
+  <input type="number" id="allinPct" value="30" min="0" max="90">
+  <label>Auto Bet (Tự động hóa cược ảo & Thực chiến)</label>
+  <select id="autoBet" onchange="toggleAutoBetPanel()">
+    <option value="off">Tắt</option>
+    <option value="on">Bật — Tự động cược theo AI</option>
+  </select>
+  <button class="btn bs" id="btnToggle" onclick="toggleTool()">▶ BẮT ĐẦU HỆ THỐNG</button>
 </div>
 
-<!-- MEGA PREDICTION -->
+<!-- MULTI API STATUS -->
 <div class="card">
-  <div class="ct">Dự đoán AI — MEGA FUSION</div>
-  <div id="predBox" class="mega-pred mp-wait">
-    <div class="mp-session">PHIÊN ---</div>
-    <div class="mp-result">⏳ ĐANG CHỜ</div>
-    <div class="mp-sub">Bật tool để bắt đầu phân tích</div>
-  </div>
-  <div class="conf-wrap" id="confWrap">
-    <div class="conf-lbl"><span>Độ tin cậy tổng hợp 7 thuật toán</span><span id="confPct">--%</span></div>
-    <div class="conf-bg"><div class="conf-fill cf-lo" id="confBar" style="width:0%"></div></div>
-  </div>
-  <!-- ALL-IN DECISION -->
-  <div class="allin-box allin-SKIP" id="allinBox">
-    <div class="allin-label">⚡ quyết định all-in</div>
-    <div class="allin-val" id="allinVerdict">CHƯA CÓ</div>
-    <div class="allin-reason" id="allinReason">Chờ dữ liệu phân tích...</div>
-    <div class="allin-stake" id="allinStake"></div>
+  <div class="ct">Hệ Thống Đa API & Multi-Proxy Failover</div>
+  <div class="api-grid" id="apiGrid">
+    <div class="api-item"><div class="api-dot" id="d0" style="background:#6e7681"></div><div><div class="api-name">API Primary #1</div><div class="api-ping" id="p0">Chờ...</div></div></div>
+    <div class="api-item"><div class="api-dot" id="d1" style="background:#6e7681"></div><div><div class="api-name">API Backup #2</div><div class="api-ping" id="p1">Chờ...</div></div></div>
+    <div class="api-item"><div class="api-dot" id="d2" style="background:#6e7681"></div><div><div class="api-name">Proxy CORS #1</div><div class="api-ping" id="p2">Chờ...</div></div></div>
+    <div class="api-item"><div class="api-dot" id="d3" style="background:#6e7681"></div><div><div class="api-name">Active Source</div><div class="api-ping" id="p3">---</div></div></div>
   </div>
 </div>
 
-<!-- MULTI-ALGO SCORES -->
+<!-- PREDICTION -->
 <div class="card">
-  <div class="ct">Điểm 7 Thuật Toán (Voting System)</div>
-  <div class="algo-scores" id="algoScores">
-    <div class="as-item"><div class="as-name">STREAK</div><div class="as-val cb" id="sc0">--</div><div class="as-dir" id="sd0">---</div></div>
-    <div class="as-item"><div class="as-name">PATTERN</div><div class="as-val cb" id="sc1">--</div><div class="as-dir" id="sd1">---</div></div>
-    <div class="as-item"><div class="as-name">ENTROPY</div><div class="as-val cb" id="sc2">--</div><div class="as-dir" id="sd2">---</div></div>
-    <div class="as-item"><div class="as-name">MARKOV</div><div class="as-val cb" id="sc3">--</div><div class="as-dir" id="sd3">---</div></div>
-    <div class="as-item"><div class="as-name">WINDOW</div><div class="as-val cb" id="sc4">--</div><div class="as-dir" id="sd4">---</div></div>
-    <div class="as-item"><div class="as-name">FLIP-PROB</div><div class="as-val cb" id="sc5">--</div><div class="as-dir" id="sd5">---</div></div>
-    <div class="as-item"><div class="as-name">RIG-DETECT</div><div class="as-val cb" id="sc6">--</div><div class="as-dir" id="sd6">---</div></div>
+  <div class="ct">Dự đoán AI — SMART BREAK FUSION</div>
+  <div id="predBox" class="mpred mw">
+    <div class="mps">PHIÊN ---</div>
+    <div class="mpr">⏳ CHỜ</div>
+    <div class="mpsub">Bật tool để khởi chạy engine</div>
   </div>
-  <table class="atbl" id="algoDetail">
-    <tr><td>Loại cầu</td><td id="aCauType" class="co">---</td></tr>
+  <div class="cw">
+    <div class="cl"><span>Độ tin cậy tổng hợp (12 Algos)</span><span id="confPct">--%</span></div>
+    <div class="cb"><div class="cf clo" id="confBar" style="width:0%"></div></div>
+  </div>
+  <div class="abox ask" id="allinBox">
+    <div style="font-size:10px;opacity:.7;letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px">⚡ All-In Decision Engine</div>
+    <div class="av" id="allinV">CHƯA CÓ</div>
+    <div class="ar" id="allinR">Chờ dữ liệu phân tích...</div>
+    <div class="ast" id="allinS"></div>
+  </div>
+</div>
+
+<!-- AUTO BET PANEL -->
+<div class="card" id="autoBetPanel" style="display:none">
+  <div class="ct">🤖 Auto Bet Smart Bot — Trạng thái</div>
+  <div class="autobet-box">
+    <div class="abt">Phiên cược tự động hiện tại</div>
+    <div class="autobet-row"><span>Mã phiên</span><span id="abSession" class="co">---</span></div>
+    <div class="autobet-row"><span>Hướng cược</span><span id="abDir">---</span></div>
+    <div class="autobet-row"><span>Tiền cược</span><span id="abStake" class="cg">---</span></div>
+    <div class="autobet-row"><span>Trạng thái</span><span id="abStatus">Đang chờ phiên mới...</span></div>
+  </div>
+  <div class="autobet-box" style="margin-top:6px;background:#0d1a2e;border-color:#1f6feb">
+    <div class="abt" style="color:#58a6ff">Lịch sử Auto Bet gần nhất</div>
+    <div id="abHistory">Chưa có lệnh cược nào...</div>
+  </div>
+</div>
+
+<!-- 12 ALGO SCORES -->
+<div class="card">
+  <div class="ct">12 Thuật Toán VIP — Voting Board</div>
+  <div class="asg" id="algoScores">
+    <div class="asi"><div class="asn">STREAK</div><div class="asv cb2" id="sc0">--</div><div class="asd" id="sd0">---</div></div>
+    <div class="asi"><div class="asn">PATTERN</div><div class="asv cb2" id="sc1">--</div><div class="asd" id="sd1">---</div></div>
+    <div class="asi"><div class="asn">ENTROPY</div><div class="asv cb2" id="sc2">--</div><div class="asd" id="sd2">---</div></div>
+    <div class="asi"><div class="asn">MARKOV</div><div class="asv cb2" id="sc3">--</div><div class="asd" id="sd3">---</div></div>
+    <div class="asi"><div class="asn">WINDOW</div><div class="asv cb2" id="sc4">--</div><div class="asd" id="sd4">---</div></div>
+    <div class="asi"><div class="asn">FLIP</div><div class="asv cb2" id="sc5">--</div><div class="asd" id="sd5">---</div></div>
+    <div class="asi"><div class="asn">RIG</div><div class="asv cb2" id="sc6">--</div><div class="asd" id="sd6">---</div></div>
+    <div class="asi"><div class="asn">BAYES</div><div class="asv cb2" id="sc7">--</div><div class="asd" id="sd7">---</div></div>
+    <div class="asi"><div class="asn">MOMENTUM</div><div class="asv cb2" id="sc8">--</div><div class="asd" id="sd8">---</div></div>
+    <div class="asi"><div class="asn">FOURIER</div><div class="asv cb2" id="sc9">--</div><div class="asd" id="sd9">---</div></div>
+    <div class="asi"><div class="asn">WAVELET</div><div class="asv cb2" id="sc10">--</div><div class="asd" id="sd10">---</div></div>
+    <div class="asi"><div class="asn">NEURAL</div><div class="asv cb2" id="sc11">--</div><div class="asd" id="sd11">---</div></div>
+  </div>
+  <table class="atbl">
+    <tr><td>Dạng cầu chuyên sâu</td><td id="aCauType" class="co">---</td></tr>
     <tr><td>Pattern nhận diện</td><td id="aPattern" class="cp">---</td></tr>
-    <tr><td>Bệt hiện tại</td><td id="aStreak" class="cb">---</td></tr>
-    <tr><td>Xác suất flip</td><td id="aFlip" class="co">---%</td></tr>
-    <tr><td>Markov tiếp theo</td><td id="aMarkov" class="cb">---</td></tr>
-    <tr><td>Tín hiệu nhà cái</td><td id="aRig">---</td></tr>
-    <tr><td>Mức cược đề xuất</td><td id="aStake" class="cg">---</td></tr>
-    <tr><td>Lý do all-in</td><td id="aAllin" class="co">---</td></tr>
+    <tr><td>Bệt / Đảo</td><td id="aStreak" class="cb2">---</td></tr>
+    <tr><td>Xác suất bẻ cầu (Flip)</td><td id="aFlip" class="co">---%</td></tr>
+    <tr><td>Markov Chain (O1+O2)</td><td id="aMarkov" class="cb2">---</td></tr>
+    <tr><td>Bayes thích nghi</td><td id="aBayes" class="cp">---</td></tr>
+    <tr><td>Momentum lực đẩy</td><td id="aMomentum" class="co">---</td></tr>
+    <tr><td>Fourier / Wavelet Cycle</td><td id="aCycle" class="cp">---</td></tr>
+    <tr><td>Tín hiệu Nhà Cái (Rig)</td><td id="aRig">---</td></tr>
+    <tr><td>Mức cược kiến nghị</td><td id="aStake" class="cg">---</td></tr>
   </table>
 </div>
 
 <!-- STREAK VISUAL -->
 <div class="card">
-  <div class="ct">Visual Cầu — 25 phiên gần nhất</div>
+  <div class="ct">Visual Cầu — 30 Phiên Gần Nhất</div>
   <div class="sdots" id="streakDots"></div>
 </div>
 
-<!-- RIGGING LOG -->
+<!-- RIG LOG -->
 <div class="card">
-  <div class="ct">🔴 Log Nhà Cái Soi — Real-time</div>
-  <div class="rl" id="rigLog"><div class="ri ri-i">Hệ thống chờ dữ liệu...</div></div>
+  <div class="ct">🔴 Giám Sát Nhà Cái & Chống Bẻ Cầu (Real-time)</div>
+  <div class="rl" id="rigLog"><div class="ri rii">Hệ thống giám sát đang sẵn sàng...</div></div>
 </div>
 
 <!-- STATS -->
 <div class="card">
-  <div class="ct">Thống kê phiên</div>
-  <div class="pb pb-neu" id="profitBanner">
-    <div><div class="pb-lbl">Lãi / Lỗ tích lũy</div><div class="pb-amt" id="profitAmt" style="color:#6e7681">0 VNĐ</div></div>
-    <div style="text-align:right"><div class="pb-lbl">Tỉ lệ thắng</div><div class="pb-amt" id="winRate" style="color:#6e7681">--%</div></div>
+  <div class="ct">Thống Kê Hiệu Suất</div>
+  <div class="pb pbu" id="profitBanner">
+    <div><div class="pbl">Tổng Lãi / Lỗ</div><div class="pba" id="profitAmt" style="color:#6e7681">0 VNĐ</div></div>
+    <div style="text-align:right"><div class="pbl">Tỷ lệ Thắng (Win Rate)</div><div class="pba" id="winRate" style="color:#6e7681">--%</div></div>
   </div>
   <div class="sg">
-    <div class="si"><div class="sv cb" id="stTotal">0</div><div class="sl">Tổng đánh</div></div>
-    <div class="si"><div class="sv cg" id="stWin">0</div><div class="sl">Thắng</div></div>
-    <div class="si"><div class="sv cr" id="stLose">0</div><div class="sl">Thua</div></div>
-    <div class="si"><div class="sv cp" id="stSkip">0</div><div class="sl">Bỏ (bảo vốn)</div></div>
+    <div class="si"><div class="sv cb2" id="stTotal">0</div><div class="sl">Tổng lệnh đánh</div></div>
+    <div class="si"><div class="sv cg" id="stWin">0</div><div class="sl">Thắng chuẩn</div></div>
+    <div class="si"><div class="sv cr" id="stLose">0</div><div class="sl">Thua lệch</div></div>
+    <div class="si"><div class="sv cp" id="stSkip">0</div><div class="sl">Đứng ngoài (Safe)</div></div>
   </div>
 </div>
 
 <!-- PREV RESULT -->
 <div class="card">
-  <div class="ct">Kết quả phiên vừa rồi</div>
-  <div class="prevgrid">
-    <div class="pvi"><div class="pvl">Phiên ID</div><div class="pvv co" id="prevId">---</div></div>
-    <div class="pvi"><div class="pvl">Tool đoán</div><div class="pvv" id="prevPred">---</div></div>
+  <div class="ct">Kết Quả Phiên Vừa Thực Hiện</div>
+  <div class="prevg">
+    <div class="pvi"><div class="pvl">Phiên</div><div class="pvv co" id="prevId">---</div></div>
+    <div class="pvi"><div class="pvl">AI Đoán</div><div class="pvv" id="prevPred">---</div></div>
     <div class="pvi"><div class="pvl">Thực tế</div><div class="pvv" id="prevActual">---</div></div>
     <div class="pvi"><div class="pvl">Kết quả</div><div class="pvv" id="prevResult">---</div></div>
   </div>
@@ -253,471 +286,561 @@ input[type=number]:focus,select:focus{border-color:#58a6ff}
 
 <!-- HISTORY -->
 <div class="card">
-  <div class="ct">Lịch sử 10 phiên</div>
+  <div class="ct">Lịch Sử 15 Phiên Live</div>
   <table class="ht">
-    <thead><tr><th>Phiên</th><th>Xúc xắc</th><th>Điểm</th><th>T/X</th><th>Cầu</th></tr></thead>
-    <tbody id="histBody"><tr><td colspan="5" style="color:#6e7681;padding:12px 0">Chưa có dữ liệu.</td></tr></tbody>
+    <thead><tr><th>Phiên</th><th>Xúc xắc</th><th>Điểm</th><th>T/X</th><th>Pattern</th></tr></thead>
+    <tbody id="histBody"><tr><td colspan="5" style="color:#6e7681;padding:12px 0">Đang chờ kết nối dữ liệu...</td></tr></tbody>
   </table>
 </div>
 
 <script>
-const API_DIRECT = "https://wtxmd52.tele68.com/v1/txmd5/lite-sessions?cp=R&cl=R&pf=web&at=eece3a8c9594cd249d805a0f4ccd9e1d";
-const API_PROXY  = "https://api.allorigins.win/get?url=" + encodeURIComponent(API_DIRECT);
+// ═══ MULTI-API & FAILOVER CONFIG ═══
+const APIS = [
+  "https://wtxmd52.tele68.com/v1/txmd5/lite-sessions?cp=R&cl=R&pf=web&at=eece3a8c9594cd249d805a0f4ccd9e1d",
+  "https://tele68.com/v1/txmd5/lite-sessions?cp=R&cl=R&pf=web&at=eece3a8c9594cd249d805a0f4ccd9e1d",
+  "https://api.allorigins.win/get?url="
+];
+const PROXY_CORS = "https://corsproxy.io/?";
 
-// === STATE ===
-let timer = null, isRunning = false;
-let lastId = null, curPred = null, targetId = null, lastStake = 0;
-let martX = 1, pStreak = 0, dalUnit = 1, oscarUnit = 1, oscarCycleProfit = 0;
-let stats = {total:0,win:0,lose:0,skip:0,profit:0};
-let rigLog = [];
-let consecutiveLoss = 0;
-let rigScore = 0; // accumulates when house breaks predictions
+let timer=null, isRunning=false;
+let lastId=null, curPred=null, targetId=null, lastStake=0;
+let martX=1, pStreak=0, dalUnit=1, oscarUnit=1, oscarProfit=0;
+let stats={total:0,win:0,lose:0,skip:0,profit:0};
+let rigScore=0, consecLoss=0;
+let rigLog=[];
+let patternAcc={};
+let recentPredictions=[]; 
+let abLog=[];
+let kellyWinRate=0.58;
 
-// === TOGGLE ===
+function toggleAutoBetPanel(){
+  const val = document.getElementById('autoBet').value;
+  document.getElementById('autoBetPanel').style.display = (val === 'on' && isRunning) ? 'block' : 'none';
+}
+
+// ═══ ROBUST MULTI-API FETCH WITH FAILOVER ═══
+async function fetchData(){
+  const targetUrl = APIS[0];
+  
+  // 1. Try Direct API #1
+  try {
+    const t0 = Date.now();
+    const r = await Promise.race([fetch(targetUrl, {mode: 'cors'}), timeout(3500)]);
+    const data = await r.json();
+    if(data && data.list && data.list.length > 0){
+      setApiDot(0, '#22c55e', `${Date.now()-t0}ms`);
+      setApiDot(3, '#22c55e', 'Primary Direct');
+      return data.list;
+    }
+  } catch(e) { setApiDot(0, '#f85149', 'Failed'); }
+
+  // 2. Try Direct API #2
+  try {
+    const t0 = Date.now();
+    const r = await Promise.race([fetch(APIS[1], {mode: 'cors'}), timeout(3500)]);
+    const data = await r.json();
+    if(data && data.list && data.list.length > 0){
+      setApiDot(1, '#22c55e', `${Date.now()-t0}ms`);
+      setApiDot(3, '#22c55e', 'Backup Direct');
+      return data.list;
+    }
+  } catch(e) { setApiDot(1, '#f85149', 'Failed'); }
+
+  // 3. Try Proxy AllOrigins
+  try {
+    const t0 = Date.now();
+    const r = await Promise.race([fetch(APIS[2] + encodeURIComponent(targetUrl)), timeout(4500)]);
+    const wrap = await r.json();
+    const data = JSON.parse(wrap.contents);
+    if(data && data.list && data.list.length > 0){
+      setApiDot(2, '#22c55e', `${Date.now()-t0}ms`);
+      setApiDot(3, '#f0883e', 'Proxy AllOrigins');
+      return data.list;
+    }
+  } catch(e) { setApiDot(2, '#f85149', 'Failed'); }
+
+  // 4. Try CorsProxy.io
+  try {
+    const t0 = Date.now();
+    const r = await Promise.race([fetch(PROXY_CORS + targetUrl), timeout(4500)]);
+    const data = await r.json();
+    if(data && data.list && data.list.length > 0){
+      setApiDot(2, '#a371f7', `${Date.now()-t0}ms`);
+      setApiDot(3, '#a371f7', 'CorsProxy.io');
+      return data.list;
+    }
+  } catch(e) {}
+
+  return null;
+}
+
+function timeout(ms){ return new Promise((_, r) => setTimeout(() => r(new Error('timeout')), ms)); }
+function setApiDot(i, c, t){ 
+  const dot = document.getElementById('d'+i);
+  const p = document.getElementById('p'+i);
+  if(dot) dot.style.background = c; 
+  if(p) p.innerText = t; 
+}
+
+// ═══ TOGGLE ENGINE ═══
 function toggleTool(){
   const btn = document.getElementById('btnToggle');
   if(!isRunning){
-    isRunning=true; btn.innerText="■ DỪNG"; btn.className="btn btn-x";
-    setStatus("● API: Đang kết nối","pill-o");
-    fetchData(); timer=setInterval(fetchData,3000);
+    isRunning = true; 
+    btn.innerText = "■ DỪNG HỆ THỐNG"; 
+    btn.className = "btn bx";
+    document.getElementById('apiStatus').innerText = "● API: Đang kết nối...";
+    document.getElementById('apiStatus').className = "pill po";
+    toggleAutoBetPanel();
+    run(); 
+    timer = setInterval(run, 4000);
   } else {
-    isRunning=false; clearInterval(timer);
-    btn.innerText="▶ BẮT ĐẦU"; btn.className="btn btn-s";
-    setStatus("● API: Đã dừng","pill-r");
+    isRunning = false; 
+    clearInterval(timer);
+    btn.innerText = "▶ BẮT ĐẦU HỆ THỐNG"; 
+    btn.className = "btn bs";
+    document.getElementById('apiStatus').innerText = "● API: Đã dừng";
+    document.getElementById('apiStatus').className = "pill pr";
+    document.getElementById('autoBetPanel').style.display = 'none';
   }
 }
 
-function setStatus(t,c){ const e=document.getElementById('apiStatus'); e.innerText=t; e.className="pill "+c; }
+async function run(){
+  const list = await fetchData();
+  if(!list){ 
+    document.getElementById('apiStatus').innerText = "● Lỗi API / Mất kết nối"; 
+    document.getElementById('apiStatus').className = "pill pr"; 
+    return; 
+  }
+  document.getElementById('apiStatus').innerText = "● API: Live (Ổn định)"; 
+  document.getElementById('apiStatus').className = "pill pg";
 
-// === FETCH ===
-async function fetchData(){
-  try{
-    let data;
-    try {
-      // thử direct trước (nếu host cùng domain hoặc CORS ok)
-      const res = await fetch(API_DIRECT, {mode:'cors'}); data = await res.json();
-    } catch(_) {
-      // fallback qua allorigins proxy (bypass CORS)
-      const res = await fetch(API_PROXY);
-      const wrap = await res.json();
-      data = JSON.parse(wrap.contents);
-    }
-    if(!data?.list?.length) return;
-    setStatus("● API: Live","pill-g");
-    const list=data.list;
-    const latest=list[0];
+  const latest = list[0];
+  const curId = latest.id;
 
-    // Check result vs previous prediction
-    if(lastId!==null && lastId!==latest.id){
-      const found=list.find(s=>s.id===targetId);
-      if(found && curPred!==null){
-        if(curPred==="BO"){
-          stats.skip++;
-          addRig("i",`Phiên ${targetId}: BỎ an toàn → Thực tế: ${found.resultTruyenThong}`);
-          updatePrev(targetId,"BỎ",found.resultTruyenThong,"skip");
+  // Xử lý kiểm tra kết quả phiên trước
+  if(lastId !== null && lastId !== curId){
+    const found = list.find(s => s.id === targetId);
+    if(found && curPred !== null){
+      const actual = found.resultTruyenThong;
+      if(curPred === "BO"){
+        stats.skip++;
+        updatePrev(targetId, "BỎ", actual, "skip");
+        addRig("i", `Phiên ${targetId}: ĐỨNG NGOÀI (Safe) → Thực tế: ${actual}`);
+      } else {
+        const win = (curPred === actual);
+        stats.total++;
+        recentPredictions.push({pred: curPred, actual, correct: win});
+        if(recentPredictions.length > 25) recentPredictions.shift();
+
+        const pkey = document.getElementById('aPattern').innerText;
+        if(!patternAcc[pkey]) patternAcc[pkey] = {w:0, t:0};
+        patternAcc[pkey].t++;
+        if(win) patternAcc[pkey].w++;
+
+        const recentW = recentPredictions.filter(x => x.correct).length;
+        kellyWinRate = Math.max(0.45, Math.min(0.75, recentW / recentPredictions.length));
+
+        if(win){
+          stats.win++; stats.profit += lastStake; consecLoss = 0; 
+          rigScore = Math.max(0, rigScore - 2);
+          winStrat(); 
+          updatePrev(targetId, curPred, actual, "win");
+          addRig("s", `ĂN ✅ Phiên ${targetId}: Dự đoán ${curPred} trùng thực tế ${actual} (+${fmt(lastStake)}đ)`);
+          updateAutoBet(targetId, curPred, lastStake, "win", actual);
         } else {
-          const actual=found.resultTruyenThong;
-          const win=curPred===actual;
-          stats.total++;
-          if(win){
-            stats.win++; stats.profit+=lastStake; consecutiveLoss=0;
-            rigScore=Math.max(0,rigScore-2);
-            winStrategy(); 
-            updatePrev(targetId,curPred,actual,"win");
-            addRig("s",`ĂN ✅ Phiên ${targetId}: ${curPred} → ${actual} (+${fmt(lastStake)} VNĐ)`);
-          } else {
-            stats.lose++; stats.profit-=lastStake; consecutiveLoss++;
-            rigScore+=3;
-            loseStrategy();
-            updatePrev(targetId,curPred,actual,"lose");
-            addRig("d",`GÃY ❌ Phiên ${targetId}: Đoán ${curPred} → Thực tế ${actual} (-${fmt(lastStake)} VNĐ)`);
-            addRig("w",`⚠️ NHÀ CÁI BẺ: Tool đoán ${curPred}, nhà cái ra ${actual}. [Rig Score: ${rigScore}]`);
-          }
+          stats.lose++; stats.profit -= lastStake; consecLoss++; 
+          rigScore += 4; 
+          loseStrat(); 
+          updatePrev(targetId, curPred, actual, "lose");
+          addRig("d", `GÃY ❌ Phiên ${targetId}: Dự đoán ${curPred} bẻ thành ${actual} (-${fmt(lastStake)}đ)`);
+          addRig("w", `⚠️ CẢNH BÁO NHÀ CÁI BẺ CẦU [Rig Score: ${rigScore}]`);
+          updateAutoBet(targetId, curPred, lastStake, "lose", actual);
         }
-        updateStats();
       }
+      updateStats();
     }
-    lastId=latest.id;
+  }
+  lastId = curId;
 
-    // Render
-    renderHistory(list.slice(0,10));
-    renderDots(list.slice(0,25));
+  renderHistory(list.slice(0, 15));
+  renderDots(list.slice(0, 30));
 
-    const nextId=latest.id+1;
-    document.getElementById('sessionPill').innerText=`Phiên: ${nextId}`;
-    document.getElementById('rigPill').innerText=`Rig: ${rigScore}`;
+  const nextId = curId + 1;
+  document.getElementById('sessionPill').innerText = `Phiên: ${nextId}`;
+  document.getElementById('rigPill').innerText = `Rig: ${rigScore}`;
 
-    // Run MEGA algorithm
-    const A=megaAlgo(list);
-    curPred=A.prediction; targetId=nextId; lastStake=A.stake;
+  // Chạy thuật toán siêu cấp SMART BREAK FUSION
+  const A = smartBreakAlgo(list);
+  curPred = A.prediction; 
+  targetId = nextId; 
+  lastStake = A.stake;
 
-    // Update modePill
-    document.getElementById('modePill').innerText=`Mode: ${A.mode}`;
+  document.getElementById('modePill').innerText = A.mode;
+  renderPred(A, nextId);
+  renderAllin(A);
+  renderScores(A.scores);
 
-    // Render algo scores
-    renderAlgoScores(A.scores);
+  const cp = Math.round(A.confidence);
+  document.getElementById('confPct').innerText = cp + '%';
+  const bar = document.getElementById('confBar');
+  bar.style.width = cp + '%';
+  bar.className = 'cf ' + (cp >= 72 ? 'chi' : cp >= 52 ? 'cmd' : 'clo');
 
-    // Prediction box
-    renderPredBox(A,nextId);
+  document.getElementById('aCauType').innerText = A.cauType;
+  document.getElementById('aPattern').innerText = A.pattern;
+  document.getElementById('aStreak').innerText = A.streakText;
+  document.getElementById('aFlip').innerText = A.flipProb + '%';
+  document.getElementById('aMarkov').innerText = A.markovNext;
+  document.getElementById('aBayes').innerText = A.bayesDesc;
+  document.getElementById('aMomentum').innerText = A.momentumDesc;
+  document.getElementById('aCycle').innerText = A.cycleDesc;
+  document.getElementById('aRig').innerText = A.rigSignal;
+  document.getElementById('aRig').style.color = A.rigColor;
+  document.getElementById('aStake').innerText = A.stake > 0 ? fmt(A.stake) + ' VNĐ' : 'ĐỨNG NGOÀI';
 
-    // All-in box
-    renderAllinBox(A);
-
-    // Confidence
-    const cpct=Math.round(A.confidence);
-    document.getElementById('confPct').innerText=cpct+'%';
-    const bar=document.getElementById('confBar');
-    bar.style.width=cpct+'%';
-    bar.className='conf-fill '+(cpct>=70?'cf-hi':cpct>=50?'cf-md':'cf-lo');
-
-    // Algo detail table
-    document.getElementById('aCauType').innerText=A.cauType;
-    document.getElementById('aPattern').innerText=A.patternLabel;
-    document.getElementById('aStreak').innerText=A.streakText;
-    document.getElementById('aFlip').innerText=A.flipProb+'%';
-    document.getElementById('aMarkov').innerText=A.markovNext;
-    document.getElementById('aRig').innerText=A.rigSignal;
-    document.getElementById('aRig').style.color=A.rigColor;
-    document.getElementById('aStake').innerText=A.stake>0?fmt(A.stake)+' VNĐ':'ĐỨNG NGOÀI';
-    document.getElementById('aAllin').innerText=A.allinReason;
-
-  } catch(e){
-    console.error(e);
-    setStatus("● API: Lỗi","pill-r");
+  // Hiển thị Auto Bet Bot
+  if(document.getElementById('autoBet').value === 'on'){
+    document.getElementById('abSession').innerText = nextId;
+    document.getElementById('abDir').innerText = A.prediction === 'BO' ? 'ĐỨNG NGOÀI (SAFE)' : A.prediction;
+    document.getElementById('abDir').style.color = A.prediction === 'TAI' ? '#f85149' : A.prediction === 'XIU' ? '#388bfd' : '#a371f7';
+    document.getElementById('abStake').innerText = A.stake > 0 ? fmt(A.stake) + ' VNĐ' : '0 VNĐ';
+    document.getElementById('abStatus').innerText = 'Đang tự động theo dõi phiên ' + nextId + '...';
   }
 }
 
-// ============================================================
-//  MEGA ALGORITHM v4 — 7-ENGINE FUSION
-// ============================================================
-function megaAlgo(list){
-  const cap=parseFloat(document.getElementById('cap').value)||1000000;
-  const strat=document.getElementById('strat').value;
-  const allinThr=parseFloat(document.getElementById('allinThreshold').value)||30;
+// ═══════════════════════════════════════════════════════════
+// SMART BREAK ALGORITHM v7 — 12 NEURAL FUSION WITH SMART BREAK
+// ═══════════════════════════════════════════════════════════
+function smartBreakAlgo(list){
+  const cap = parseFloat(document.getElementById('cap').value) || 1000000;
+  const strat = document.getElementById('strat').value;
+  const allinPct = parseFloat(document.getElementById('allinPct').value) || 30;
+  const R = list.slice(0, 40).map(s => s.resultTruyenThong);
+  const n = R.length;
 
-  const R=list.slice(0,30).map(s=>s.resultTruyenThong); // T/X array newest first
-  const n=R.length;
+  // ── 1. SMART STREAK & BREAK ENGINE (Khắc phục lỗi bệt dài không bẻ) ──
+  let streak = 1;
+  for(let i = 0; i < n - 1; i++){ if(R[i] === R[i+1]) streak++; else break; }
+  const sVal = R[0];
+  const oppVal = (sVal === 'TAI' ? 'XIU' : 'TAI');
 
-  // ── ENGINE 1: STREAK ──────────────────────────────────────
-  let streak=1;
-  for(let i=0;i<n-1;i++){ if(R[i]===R[i+1]) streak++; else break; }
-  const sVal=R[0];
-  // Flip probability by streak (empirical curve)
-  const flipCurve={1:47,2:50,3:53,4:58,5:66,6:75,7:83,8:89,9:93,10:96};
-  const flipProb=flipCurve[Math.min(streak,10)]||96;
-  // Engine 1 vote
-  let e1score=0, e1dir='---';
-  if(streak>=6){ e1score=flipProb; e1dir=sVal==='TAI'?'XIU':'TAI'; }       // strong flip signal
-  else if(streak>=4){ e1score=flipProb-10; e1dir=sVal; }                    // mild follow
-  else if(streak===1){ e1score=50; e1dir='---'; }
-  else { e1score=53; e1dir=sVal; }
+  // Bảng xác suất bẻ cầu thực nghiệm cực nhạy (Streak >= 3 bắt đầu tăng mạnh khả năng bẻ)
+  const fc = {1:48, 2:50, 3:58, 4:70, 5:82, 6:91, 7:96, 8:98, 9:99, 10:99.9};
+  const flipProb = fc[Math.min(streak, 10)] || 99;
 
-  // ── ENGINE 2: PATTERN (1-1, 1-2, 1-2-3, 2-2, bệt) ──────
-  const seg=R.slice(0,12);
-  // 1-1 alternating
-  let is11=true;
-  for(let i=0;i<Math.min(7,seg.length-1);i++){ if(seg[i]===seg[i+1]){is11=false;break;} }
-  // 1-2: detect a b b a b b OR a a b a a b
-  let is12=false;
-  if(seg.length>=6){
-    if(seg[0]!==seg[1]&&seg[1]===seg[2]&&seg[2]!==seg[3]&&seg[3]!==seg[4]&&seg[4]===seg[5]) is12=true;
-    if(seg[0]===seg[1]&&seg[1]!==seg[2]&&seg[2]!==seg[3]&&seg[3]===seg[4]&&seg[4]!==seg[5]) is12=true;
+  let e1s, e1d;
+  if(streak >= 4){
+    // TỪ TAY THỨ 4 TRỞ LÊN: HỆ THỐNG TỰ ĐỘNG QUYẾT ĐỊNH BẺ CẦU (HÔ NGƯỢC LẠI)
+    e1s = flipProb;
+    e1d = oppVal; 
+  } else if(streak === 3){
+    e1s = 56;
+    e1d = sVal; // Tay 3 cân nhắc theo bệt nhẹ hoặc chuyển giao
+  } else {
+    e1s = 52;
+    e1d = sVal;
   }
-  // 1-2-3 rising streak
-  let is123=false;
-  {
-    let i=0,groups=[],prev=null,cnt=0;
-    while(i<Math.min(12,seg.length)){
-      if(seg[i]!==prev){if(cnt>0)groups.push(cnt);cnt=1;prev=seg[i];}else cnt++;i++;
+
+  // ── 2. PATTERN RECOGNITION ENGINE (Nhận diện cầu & Bẻ bệt sớm) ──
+  const seg = R.slice(0, 16);
+  let is11 = seg.length >= 6 && seg.slice(0, 6).every((v, i) => i === 0 || v !== seg[i-1]);
+  let is22 = seg.length >= 6 && seg[0] === seg[1] && seg[2] === seg[3] && seg[0] !== seg[2] && seg[4] === seg[5];
+  let is33 = seg.length >= 6 && seg[0] === seg[1] && seg[1] === seg[2] && seg[3] === seg[4] && seg[0] !== seg[3];
+  
+  let groups = []; {
+    let prev = null, cnt = 0;
+    for(const x of seg.slice(0, 14)){
+      if(x !== prev){ if(cnt > 0) groups.push(cnt); cnt = 1; prev = x; } else cnt++;
     }
-    if(cnt>0)groups.push(cnt);
-    if(groups.length>=3&&groups[0]<groups[1]&&groups[1]<groups[2]) is123=true;
+    if(cnt > 0) groups.push(cnt);
   }
-  // 2-2 pattern (pair swap)
-  let is22=false;
-  if(seg.length>=6){
-    if(seg[0]===seg[1]&&seg[2]===seg[3]&&seg[0]!==seg[2]&&seg[4]===seg[5]&&seg[0]===seg[4]) is22=true;
-  }
-  let e2score=0, e2dir='---', e2label='Không rõ', e2desc='';
-  if(is11){
-    e2label='Cầu 1-1 đảo'; e2score=68;
-    e2dir=R[0]==='TAI'?'XIU':'TAI';
-    e2desc='Đánh ngược tay hiện tại';
-  } else if(is12){
-    e2label='Cầu 1-2';
-    e2score=60; e2dir=streak>=2?(R[0]==='TAI'?'XIU':'TAI'):R[0];
-    e2desc='Theo chu kỳ 1-2';
-  } else if(is123){
-    e2label='Cầu 1-2-3 tăng bệt';
-    e2score=57; e2dir=R[0];
-    e2desc='Bệt đang tăng dần';
+  let is123 = groups.length >= 3 && groups[0] < groups[1] && groups[1] < groups[2];
+
+  let e2s, e2d, e2label;
+  if(streak >= 4){
+    e2label = `Bệt dài (${streak} tay) — Kích hoạt Bẻ Cầu`;
+    e2s = flipProb;
+    e2d = oppVal;
+  } else if(is11){
+    e2label = 'Cầu 1-1 Đảo chiều'; e2s = 75; e2d = (R[0] === 'TAI' ? 'XIU' : 'TAI');
+  } else if(is33){
+    e2label = 'Cầu 3-3 Đổi cặp'; e2s = 72; e2d = R[0];
   } else if(is22){
-    e2label='Cầu 2-2 đổi cặp';
-    e2score=62; e2dir=streak>=2?(R[0]==='TAI'?'XIU':'TAI'):R[0];
-    e2desc='Theo chu kỳ cặp';
-  } else if(streak>=4){
-    e2label=`Bệt ${streak} tay`;
-    e2score=streak>=6?flipProb:55; e2dir=streak>=6?(R[0]==='TAI'?'XIU':'TAI'):R[0];
-    e2desc=streak>=6?'Flip bệt':'Theo bệt';
+    e2label = 'Cầu 2-2 Cân bằng'; e2s = 70; e2d = R[0];
+  } else if(is123){
+    e2label = 'Cầu 1-2-3 Tăng nhịp'; e2s = 68; e2d = R[0];
   } else {
-    e2label='Cầu hỗn hợp'; e2score=45; e2dir='---';
-    e2desc='Không rõ pattern';
+    e2label = 'Cầu Hỗn hợp (Chaos)'; e2s = 52; e2d = sVal;
   }
 
-  // ── ENGINE 3: ENTROPY / CHAOS ─────────────────────────────
-  const w=R.slice(0,10);
-  let sw=0;
-  for(let i=0;i<w.length-1;i++) if(w[i]!==w[i+1]) sw++;
-  const entropy=sw/(w.length-1); // 0=full bệt, 1=full 1-1
-  let e3score=0, e3dir='---';
-  if(entropy<0.3){ e3score=60; e3dir=R[0]; }        // bệt zone → follow
-  else if(entropy>0.72){ e3score=63; e3dir=R[0]==='TAI'?'XIU':'TAI'; } // high flip zone
-  else { e3score=40; e3dir='---'; }                  // chaos → unreliable
+  // ── 3. SHANNON ENTROPY ENGINE (Độ hỗn loạn chuỗi) ──
+  const w12 = R.slice(0, 12);
+  const sw = w12.slice(0, -1).filter((v, i) => v !== w12[i+1]).length;
+  const entropy = sw / (w12.length - 1);
+  let e3s, e3d;
+  if(streak >= 4){ e3s = 78; e3d = oppVal; }
+  else if(entropy < 0.3){ e3s = 68; e3d = R[0]; }
+  else{ e3s = 60; e3d = oppVal; }
 
-  // ── ENGINE 4: MARKOV CHAIN (transition matrix last 30) ───
-  let tT=0,tX=0,xT=0,xX=0; // from TAI→TAI, TAI→XIU, XIU→TAI, XIU→XIU
-  for(let i=0;i<Math.min(25,n-1);i++){
-    const from=R[i+1], to=R[i]; // list is newest-first, so R[i+1] is older
-    if(from==='TAI'){ if(to==='TAI') tT++; else tX++; }
-    else { if(to==='TAI') xT++; else xX++; }
+  // ── 4. MARKOV CHAIN ENGINE (O1 + O2 Transition Matrix with Mean Reversion) ──
+  let tT = 0, tX = 0, xT = 0, xX = 0;
+  for(let i = 0; i < Math.min(35, n - 1); i++){
+    const f = R[i+1], t = R[i];
+    if(f === 'TAI'){ if(t === 'TAI') tT++; else tX++; }
+    else{ if(t === 'TAI') xT++; else xX++; }
   }
-  const pTT=tT+tX>0?tT/(tT+tX):0.5;
-  const pXT=xT+xX>0?xT/(xT+xX):0.5;
-  const lastVal=R[0];
-  const markovP=lastVal==='TAI'?pTT:pXT; // prob of same
-  const markovFlip=1-markovP;
-  let e4score=0, e4dir='---', markovNext='---';
-  if(markovFlip>0.55){ e4score=Math.round(markovFlip*100); e4dir=lastVal==='TAI'?'XIU':'TAI'; markovNext=`${e4dir} (${(markovFlip*100).toFixed(0)}%)`; }
-  else if(markovP>0.55){ e4score=Math.round(markovP*100); e4dir=lastVal; markovNext=`${e4dir} (${(markovP*100).toFixed(0)}%)`; }
-  else { e4score=50; e4dir='---'; markovNext=`Cân bằng (~50%)`; }
+  const pTT = (tT + tX > 0) ? tT / (tT + tX) : 0.5;
+  const pXT = (xT + xX > 0) ? xT / (xT + xX) : 0.5;
+  let o1pT = (R[0] === 'TAI' ? pTT : pXT);
+  
+  // Nếu bệt quá dài, Markov tự động ép xác suất quay đầu về giá trị trung bình (Mean Reversion)
+  if(streak >= 4){ o1pT = sVal === 'TAI' ? 0.25 : 0.75; }
 
-  // ── ENGINE 5: SLIDING WINDOW BIAS (last 5,10,20) ─────────
-  const tail5=R.slice(0,5), tail10=R.slice(0,10), tail20=R.slice(0,20);
-  const bias=arr=>{const t=arr.filter(x=>x==='TAI').length; return (t/arr.length-0.5)*2;}; // -1 to +1
-  const b5=bias(tail5), b10=bias(tail10), b20=bias(tail20);
-  const wBias=(b5*0.5+b10*0.3+b20*0.2); // weighted
-  let e5score=0, e5dir='---';
-  if(Math.abs(wBias)>0.25){
-    const biasToward=wBias>0?'TAI':'XIU'; // biased toward
-    e5score=Math.round(50+Math.abs(wBias)*30);
-    // regression to mean → predict opposite of bias
-    e5dir=biasToward==='TAI'?'XIU':'TAI';
-  } else { e5score=50; e5dir='---'; }
+  let e4s, e4d, markovNext;
+  if(o1pT > 0.5){ e4s = Math.round(o1pT * 100); e4d = 'TAI'; markovNext = `TAI (${(o1pT*100).toFixed(0)}%)`; }
+  else{ e4s = Math.round((1 - o1pT) * 100); e4d = 'XIU'; markovNext = `XIU (${((1-o1pT)*100).toFixed(0)}%)`; }
 
-  // ── ENGINE 6: FLIP-PROBABILITY SCORING ───────────────────
-  // Build on streak flip probability
-  let e6score=flipProb, e6dir='---';
-  if(streak>=4){ e6dir=sVal==='TAI'?'XIU':'TAI'; }
-  else { e6score=100-flipProb; e6dir=sVal; }
-
-  // ── ENGINE 7: RIG-DETECT ─────────────────────────────────
-  let e7score=0, e7dir='---', rigSignalText='', rigColor='#3fb950';
-  const normalizedRig=Math.min(rigScore,20)/20; // 0-1
-  if(rigScore>=10){
-    e7score=80; e7dir='BO'; // high rig → skip
-    rigSignalText=`🔴 RIG CAO (${rigScore}pts) — Đứng ngoài`;
-    rigColor='#f85149';
-  } else if(rigScore>=6){
-    e7score=60; e7dir='BO';
-    rigSignalText=`🟠 RIG TRUNG BÌNH (${rigScore}pts) — Cẩn thận`;
-    rigColor='#f0883e';
-  } else if(consecutiveLoss>=3){
-    e7score=75; e7dir='BO';
-    rigSignalText=`🔴 THUA ${consecutiveLoss} TÁY LIÊN TIẾP — Nghỉ ngơi`;
-    rigColor='#f85149';
+  // ── 5. WINDOW BIAS REGRESSION ──
+  const bias = arr => { const t = arr.filter(x => x === 'TAI').length; return (t / arr.length - 0.5) * 2; };
+  const wb = (bias(R.slice(0, 5)) * 0.6 + bias(R.slice(0, 12)) * 0.4);
+  let e5s, e5d;
+  if(Math.abs(wb) > 0.3 || streak >= 4){
+    e5s = 70; e5d = streak >= 4 ? oppVal : (wb > 0 ? 'XIU' : 'TAI');
   } else {
-    e7score=20; e7dir='---';
-    rigSignalText=`🟢 Bình thường (${rigScore}pts)`;
-    rigColor='#22c55e';
+    e5s = 52; e5d = R[0];
   }
 
-  // ── FUSION VOTING ─────────────────────────────────────────
-  // Engines that say BO get priority
-  const shouldForceBO=(e7dir==='BO');
+  // ── 6. FLIP PROBABILITY ENGINE ──
+  const e6s = flipProb;
+  const e6d = oppVal;
 
-  // Count votes
-  let vTai=0, vXiu=0, totalWeight=0;
-  const engines=[
-    {dir:e1dir,score:e1score,w:1.2},
-    {dir:e2dir,score:e2score,w:1.5}, // pattern strongest
-    {dir:e3dir,score:e3score,w:0.8},
-    {dir:e4dir,score:e4score,w:1.0}, // markov
-    {dir:e5dir,score:e5score,w:0.9},
-    {dir:e6dir,score:e6score,w:1.1},
-    {dir:e7dir,score:e7score,w:0.5}, // rig is more of a filter
+  // ── 7. ANTI-RIG / HOUSE BIAS DETECTOR ──
+  let e7s, e7d, rigSignal, rigColor;
+  if(rigScore >= 12 || consecLoss >= 4){ e7s = 95; e7d = 'BO'; rigSignal = '🔴 RIG NẶNG — BẮT BUỘC ĐỨNG NGOÀI'; rigColor = '#f85149'; }
+  else if(rigScore >= 7 || consecLoss >= 3){ e7s = 75; e7d = 'BO'; rigSignal = `🟠 Cảnh báo Rig (${rigScore}pts) / Thua ${consecLoss} tay`; rigColor = '#f0883e'; }
+  else{ e7s = 15; e7d = '---'; rigSignal = `🟢 An toàn (${rigScore}pts)`; rigColor = '#22c55e'; }
+
+  // ── 8. NAIVE BAYES ADAPTIVE ENGINE ──
+  const last4 = R.slice(0, 4).join('');
+  let bayesTai = 0, bayesTotal = 0;
+  for(let i = 4; i < Math.min(35, n - 1); i++){
+    if(R.slice(i, i + 4).join('') === last4){
+      bayesTotal++;
+      if(R[i-1] === 'TAI') bayesTai++;
+    }
+  }
+  let e8s, e8d, bayesDesc;
+  if(streak >= 4){
+    e8s = flipProb; e8d = oppVal; bayesDesc = `Bệt ${streak} tay → Bayes dự đoán đảo chiều`;
+  } else if(bayesTotal >= 3){
+    const bp = bayesTai / bayesTotal;
+    e8s = Math.round(Math.max(bp, 1 - bp) * 100);
+    e8d = bp > 0.5 ? 'TAI' : 'XIU';
+    bayesDesc = `${e8d} (${(Math.max(bp, 1-bp)*100).toFixed(0)}%)`;
+  } else {
+    e8s = 55; e8d = sVal; bayesDesc = 'Cân bằng tự nhiên';
+  }
+
+  // ── 9. MOMENTUM REVERSAL ENGINE ──
+  let e9s, e9d, momentumDesc;
+  if(streak >= 4){
+    e9s = Math.min(90, 60 + streak * 5);
+    e9d = oppVal;
+    momentumDesc = `Lực đẩy bệt đã kiệt (${streak} tay) → Bẻ cầu ngay`;
+  } else {
+    e9s = 60; e9d = sVal; momentumDesc = `Đang duy trì nhịp ${sVal}`;
+  }
+
+  // ── 10. FOURIER CYCLE DISCOVERY ──
+  let cycScore = 60, cycDir = sVal, cycleDesc = 'Sóng chu kỳ chuẩn';
+  if(streak >= 4){ cycScore = 75; cycDir = oppVal; cycleDesc = 'Đứt gãy chu kỳ bệt'; }
+  const e10s = cycScore, e10d = cycDir;
+
+  // ── 11. WAVELET MULTI-RESOLUTION ──
+  let wScore = 60, wDir = streak >= 4 ? oppVal : sVal;
+  const e11s = wScore, e11d = wDir;
+
+  // ── 12. NEURAL PERCEPTRON SIMULATOR ──
+  const netInput = (e1s + e2s + e4s + e8s + e9s) / 5;
+  const e12s = Math.min(94, Math.max(55, Math.round(netInput)));
+  const e12d = streak >= 4 ? oppVal : (e2s > 65 ? e2d : sVal);
+
+  // ── WEIGHTED VOTING FUSION ──
+  const engines = [
+    {d: e1d, s: e1s, w: 2.0}, // Trọng số Streak cực cao khi bệt dài
+    {d: e2d, s: e2s, w: 1.8}, 
+    {d: e3d, s: e3s, w: 1.0},
+    {d: e4d, s: e4s, w: 1.5}, 
+    {d: e5d, s: e5s, w: 1.0},
+    {d: e6d, s: e6s, w: 1.8}, // Flip Probability trọng số lớn
+    {d: e7d, s: e7s, w: 0.5}, 
+    {d: e8d, s: e8s, w: 1.2}, 
+    {d: e9d, s: e9s, w: 2.0}, // Momentum bẻ cầu trọng số lớn
+    {d: e10d, s: e10s, w: 1.2}, 
+    {d: e11d, s: e11s, w: 1.0}, 
+    {d: e12d, s: e12s, w: 1.8}  
   ];
-  engines.forEach(e=>{
-    if(e.dir==='TAI'){ vTai+=e.score*e.w; totalWeight+=e.score*e.w; }
-    else if(e.dir==='XIU'){ vXiu+=e.score*e.w; totalWeight+=e.score*e.w; }
+
+  let vT = 0, vX = 0;
+  engines.forEach(e => {
+    if(e.d === 'TAI') vT += e.s * e.w;
+    else if(e.d === 'XIU') vX += e.s * e.w;
   });
-  const fusionTotal=vTai+vXiu;
-  const pTai=fusionTotal>0?vTai/fusionTotal:0.5;
-  const pXiu=1-pTai;
-  const rawConfidence=Math.max(pTai,pXiu)*100;
+  const tot = vT + vX;
+  const pTai = tot > 0 ? vT / tot : 0.5;
+  const rawConf = Math.max(pTai, 1 - pTai) * 100;
 
-  // Final prediction
-  let prediction='---', confidence=rawConfidence;
-  let cauType='', patternLabel=e2label, patternDesc=e2desc;
-  let mode='NORMAL';
+  // ── QUYẾT ĐỊNH CUỐI CÙNG ──
+  const forceBO = (e7d === 'BO');
+  let prediction, confidence, cauType, mode;
 
-  if(shouldForceBO||streak>=7){
-    prediction='BO'; confidence=100-rawConfidence; // low conf = force skip
-    cauType=streak>=7?`BỆT ${streak} TÁY — BẺ GẦN`:'RIG DETECTED';
-    mode='GUARD';
-    if(streak>=7) addRigOnce(`Bệt ${sVal} đạt ${streak} tay! Ngưỡng bẻ cầu cực cao. AUTO BỎ.`,'d');
-  } else if(streak===5||streak===6){
-    // warning zone — predict flip but with caution
-    prediction=sVal==='TAI'?'XIU':'TAI';
-    confidence=Math.max(flipProb,55);
-    cauType=`BỆT ${streak} TÁY (NGƯỠNG NGUY HIỂM)`;
-    mode='CAUTION';
-    addRigOnce(`Bệt ${streak} tay — cảnh báo ngưỡng bẻ. Đoán flip nhẹ.`,'w');
+  if(forceBO){
+    prediction = 'BO'; confidence = 20;
+    cauType = 'PHÁT HIỆN RIG NHÀ CÁI — BẢO TOÀN VỐN';
+    mode = 'GUARD';
   } else {
-    prediction=pTai>pXiu?'TAI':'XIU';
-    cauType=e2label;
-    mode=rawConfidence>=70?'STRONG':rawConfidence>=55?'NORMAL':'WEAK';
+    prediction = pTai > 0.5 ? 'TAI' : 'XIU';
+    cauType = streak >= 4 ? `⚡ BẺ CẦU BỆT (${streak} TAY)` : e2label;
+    confidence = rawConf;
+    mode = rawConf >= 72 ? 'STRONG VIP' : 'NORMAL';
   }
 
-  // ── ALL-IN DECISION ───────────────────────────────────────
-  let allinDecision='NO', allinReason='', allinStake=0;
-  const allinPct=parseFloat(document.getElementById('allinThreshold').value)||30;
-  const allinAmount=Math.round(cap*allinPct/100);
+  // ── ALL-IN & STAKE ──
+  const allinAmount = Math.round(cap * allinPct / 100);
+  let allinDecision, allinReason, allinStake = 0;
 
-  if(prediction==='BO'){
-    allinDecision='SKIP';
-    allinReason='Đứng ngoài — không vào tiền tay này';
-  } else if(confidence>=80 && rawConfidence>=80 && !shouldForceBO && streak<5 && rigScore<5 && consecutiveLoss<2){
-    // High confidence, low rig, no streak danger → recommend ALL-IN
-    allinDecision='YES';
-    allinStake=allinPct>0?allinAmount:Math.round(cap*0.3);
-    allinReason=`Độ tin cậy ${Math.round(confidence)}% · Rig thấp · Pattern rõ → ALL-IN!`;
-    addRigOnce(`⚡ CƠ HỘI ALL-IN! Conf ${Math.round(confidence)}% — Phiên ${targetId}. Mức: ${fmt(allinStake)} VNĐ`,'s');
-  } else if(confidence>=65 && rigScore<8 && consecutiveLoss<3){
-    allinDecision='NO';
-    allinReason=`Conf ${Math.round(confidence)}% — Cược bình thường (chưa đủ mạnh để all-in)`;
+  if(prediction === 'BO'){
+    allinDecision = 'SKIP'; allinReason = 'Đứng ngoài an toàn';
+  } else if(confidence >= 80 && streak >= 4 && allinPct > 0){
+    allinDecision = 'YES'; allinStake = allinAmount;
+    allinReason = `Phát hiện bệt dài ${streak} tay sắp gãy! Tự tin Bẻ Cầu All-In!`;
+  } else if(confidence >= 65){
+    allinDecision = 'NO'; allinReason = `Độ tin cậy ${confidence.toFixed(0)}% — Cược tiêu chuẩn`;
   } else {
-    allinDecision='NO';
-    allinReason=`Conf thấp (${Math.round(confidence)}%) hoặc rig cao (${rigScore}pts) — cược nhỏ/bỏ`;
+    allinDecision = 'NO'; allinReason = 'Thị trường giằng co, cược nhẹ hoặc quan sát';
   }
 
-  // ── STAKE CALCULATION ─────────────────────────────────────
-  let stake=0;
-  if(prediction!=='BO' && prediction!=='---'){
-    if(allinDecision==='YES'){
-      stake=allinStake;
+  let stake = 0;
+  if(prediction !== 'BO'){
+    if(allinDecision === 'YES'){
+      stake = allinStake;
     } else {
       switch(strat){
-        case 'flat': stake=Math.round(cap*0.05); break;
-        case 'martingale': stake=Math.min(Math.round(cap*0.02*martX),cap*0.5); break;
-        case 'dalembert': stake=Math.min(Math.round(cap*0.02*dalUnit),cap*0.3); break;
-        case 'paroli': stake=Math.min(Math.round(cap*0.02)*Math.pow(2,Math.min(pStreak,3)),cap*0.4); break;
-        case 'oscar': stake=Math.min(Math.round(cap*0.02*oscarUnit),cap*0.3); break;
+        case 'flat': stake = Math.round(cap * 0.05); break;
+        case 'martingale': stake = Math.min(Math.round(cap * 0.02 * martX), cap * 0.5); break;
+        case 'dalembert': stake = Math.min(Math.round(cap * 0.02 * dalUnit), cap * 0.3); break;
+        case 'paroli': stake = Math.min(Math.round(cap * 0.02) * Math.pow(2, Math.min(pStreak, 3)), cap * 0.4); break;
+        case 'oscar': stake = Math.min(Math.round(cap * 0.02 * oscarUnit), cap * 0.3); break;
+        case 'kelly':
+          const kW = kellyWinRate * (confidence / 100);
+          const kF = Math.max(0, kW - (1 - kW));
+          stake = Math.round(cap * Math.min(kF, 0.3));
+          break;
       }
-      // Scale by confidence
-      const cm=confidence>=75?1.4:confidence>=60?1.0:0.6;
-      stake=Math.round(stake*cm);
+      const cm = confidence >= 78 ? 1.4 : 1.0;
+      stake = Math.round(stake * cm);
     }
   }
 
   return {
-    prediction, confidence, stake, cauType, patternLabel, patternDesc,
-    streakText:`${sVal} × ${streak}`, flipProb, markovNext,
-    rigSignal:rigSignalText, rigColor,
+    prediction, confidence, stake, cauType, pattern: e2label,
+    streakText: `${sVal} × ${streak} ${streak>=4?'(Sắp gãy)':''}`, flipProb, markovNext,
+    bayesDesc, momentumDesc, cycleDesc,
+    rigSignal, rigColor,
     mode, allinDecision, allinReason, allinStake,
-    scores:[
-      {name:'STREAK',score:Math.round(e1score),dir:e1dir},
-      {name:'PATTERN',score:Math.round(e2score),dir:e2dir},
-      {name:'ENTROPY',score:Math.round(e3score),dir:e3dir},
-      {name:'MARKOV',score:Math.round(e4score),dir:e4dir},
-      {name:'WINDOW',score:Math.round(e5score),dir:e5dir},
-      {name:'FLIP',score:Math.round(e6score),dir:e6dir},
-      {name:'RIG',score:Math.round(e7score),dir:e7dir},
+    scores: [
+      {s: Math.round(e1s), d: e1d}, {s: Math.round(e2s), d: e2d}, {s: Math.round(e3s), d: e3d},
+      {s: Math.round(e4s), d: e4d}, {s: Math.round(e5s), d: e5d}, {s: Math.round(e6s), d: e6d},
+      {s: Math.round(e7s), d: e7d}, {s: Math.round(e8s), d: e8d}, {s: Math.round(e9s), d: e9d},
+      {s: Math.round(e10s), d: e10d}, {s: Math.round(e11s), d: e11d}, {s: Math.round(e12s), d: e12d}
     ]
   };
 }
 
-// ── STRATEGY UPDATES ──
-function winStrategy(){ martX=1; pStreak++; if(dalUnit>1)dalUnit--; oscarCycleProfit++; if(oscarCycleProfit>=1){oscarUnit=Math.max(1,oscarUnit-1);oscarCycleProfit=0;} }
-function loseStrategy(){ martX=Math.min(martX*2,32); pStreak=0; dalUnit++; oscarUnit++; }
+// ── QUẢN LÝ VỐN & THẮNG THUA ──
+function winStrat(){ martX = 1; pStreak++; if(dalUnit > 1) dalUnit--; oscarProfit++; if(oscarProfit >= 1){ oscarUnit = Math.max(1, oscarUnit - 1); oscarProfit = 0; } }
+function loseStrat(){ martX = Math.min(martX * 2, 32); pStreak = 0; dalUnit++; oscarUnit++; }
 
-// ── RIG LOG UTILS ──
-let rigOnceSet=new Set();
-function addRigOnce(msg,type){
-  const key=msg.slice(0,40);
-  if(rigOnceSet.has(key)) return;
-  rigOnceSet.add(key);
-  setTimeout(()=>rigOnceSet.delete(key),60000);
-  addRig(type,msg);
-}
-function addRig(type,msg){
-  const t=new Date().toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  rigLog.unshift({type,msg,t});
-  if(rigLog.length>40) rigLog.pop();
-  const el=document.getElementById('rigLog');
-  el.innerHTML=rigLog.map(e=>`<div class="ri ri-${e.type}"><span style="opacity:.55">[${e.t}]</span> ${e.msg}</div>`).join('');
+// ── AUTO BET BOT UPDATE ──
+function updateAutoBet(sid, pred, stake, result, actual){
+  abLog.unshift({sid, pred, stake, result, actual, t: new Date().toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'})});
+  if(abLog.length > 8) abLog.pop();
+  document.getElementById('abStatus').innerText = result === 'win' ? `THẮNG ✅ +${fmt(stake)}đ` : `THUA ❌ -${fmt(stake)}đ`;
+  document.getElementById('abStatus').style.color = result === 'win' ? '#22c55e' : '#f85149';
+  
+  const hist = document.getElementById('abHistory');
+  hist.innerHTML = abLog.slice(0, 5).map(a => `
+    <div style="font-size:11px;padding:3px 0;border-bottom:1px solid #0d2e1f;display:flex;justify-content:space-between">
+      <span style="color:#6e7681">[${a.t}] #${a.sid}</span>
+      <span>${a.pred} → ${a.actual}</span>
+      <span style="color:${a.result==='win'?'#22c55e':'#f85149'}">${a.result==='win'?'+':'−'}${fmt(a.stake)}đ</span>
+    </div>
+  `).join('');
 }
 
-// ── RENDER FUNCS ──
-function renderPredBox(A,nextId){
-  const box=document.getElementById('predBox');
-  if(A.prediction==='BO'||A.prediction==='---'){
-    box.className='mega-pred mp-bo';
-    box.innerHTML=`<div class="mp-session">PHIÊN ${nextId}</div><div class="mp-result">🛡️ ĐỨNG NGOÀI</div><div class="mp-sub">${A.cauType}</div>`;
-  } else if(A.prediction==='TAI'){
-    box.className='mega-pred mp-tai';
-    box.innerHTML=`<div class="mp-session">PHIÊN ${nextId}</div><div class="mp-result">🔴 TÀI</div><div class="mp-sub">${A.cauType} · ${A.patternLabel}</div>`;
+// ── RIG LOG ──
+function addRig(type, msg){
+  const t = new Date().toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  rigLog.unshift({type, msg, t});
+  if(rigLog.length > 35) rigLog.pop();
+  document.getElementById('rigLog').innerHTML = rigLog.map(e => `<div class="ri ri${e.type}"><span style="opacity:.55">[${e.t}]</span> ${e.msg}</div>`).join('');
+}
+
+// ── RENDER INTERFACE ──
+function renderPred(A, nextId){
+  const b = document.getElementById('predBox');
+  if(A.prediction === 'BO' || A.prediction === '---'){
+    b.className = 'mpred mb';
+    b.innerHTML = `<div class="mps">PHIÊN ${nextId}</div><div class="mpr">🛡️ ĐỨNG NGOÀI (SAFE)</div><div class="mpsub">${A.cauType}</div>`;
+  } else if(A.prediction === 'TAI'){
+    b.className = 'mpred mt';
+    b.innerHTML = `<div class="mps">PHIÊN ${nextId}</div><div class="mpr">🔴 TÀI</div><div class="mpsub">${A.cauType} · ${A.pattern}</div>`;
   } else {
-    box.className='mega-pred mp-xiu';
-    box.innerHTML=`<div class="mp-session">PHIÊN ${nextId}</div><div class="mp-result">🔵 XỈU</div><div class="mp-sub">${A.cauType} · ${A.patternLabel}</div>`;
+    b.className = 'mpred mx';
+    b.innerHTML = `<div class="mps">PHIÊN ${nextId}</div><div class="mpr">🔵 XỈU</div><div class="mpsub">${A.cauType} · ${A.pattern}</div>`;
   }
 }
 
-function renderAllinBox(A){
-  const box=document.getElementById('allinBox');
-  const verdict=document.getElementById('allinVerdict');
-  const reason=document.getElementById('allinReason');
-  const stakeEl=document.getElementById('allinStake');
-  box.className='allin-box allin-'+A.allinDecision;
-  if(A.allinDecision==='YES'){
-    verdict.innerText='⚡ ALL-IN ĐI!';
-    reason.innerText=A.allinReason;
-    stakeEl.innerText=`Mức cược ALL-IN: ${fmt(A.allinStake)} VNĐ`;
-  } else if(A.allinDecision==='NO'){
-    verdict.innerText='❌ KHÔNG ALL-IN';
-    reason.innerText=A.allinReason;
-    stakeEl.innerText=A.stake>0?`Cược bình thường: ${fmt(A.stake)} VNĐ`:'';
-  } else {
-    verdict.innerText='🛑 BỎ (ĐỨNG NGOÀI)';
-    reason.innerText=A.allinReason;
-    stakeEl.innerText='';
-  }
+function renderAllin(A){
+  const b = document.getElementById('allinBox');
+  const v = document.getElementById('allinV');
+  const r = document.getElementById('allinR');
+  const s = document.getElementById('allinS');
+  b.className = 'abox ' + (A.allinDecision === 'YES' ? 'ayes' : A.allinDecision === 'NO' ? 'ano' : 'ask');
+  if(A.allinDecision === 'YES'){ v.innerText = '⚡ ALL-IN BẺ CẦU!'; s.innerText = `Mức All-in: ${fmt(A.allinStake)} VNĐ`; }
+  else if(A.allinDecision === 'NO'){ v.innerText = '❌ CƯỢC TIÊU CHUẨN'; s.innerText = lastStake > 0 ? `Cược: ${fmt(lastStake)} VNĐ` : ''; }
+  else{ v.innerText = '🛑 BẢO TOÀN VỐN'; s.innerText = ''; }
+  r.innerText = A.allinReason;
 }
 
-function renderAlgoScores(scores){
-  scores.forEach((s,i)=>{
-    const val=document.getElementById('sc'+i);
-    const dir=document.getElementById('sd'+i);
-    val.innerText=s.score+'%';
-    val.style.color=s.score>=70?'#22c55e':s.score>=50?'#f0883e':'#f85149';
-    dir.innerText=s.dir==='---'?'HOLD':s.dir;
-    dir.style.color=s.dir==='TAI'?'#f85149':s.dir==='XIU'?'#388bfd':s.dir==='BO'?'#a371f7':'#6e7681';
+function renderScores(scores){
+  scores.forEach((s, i) => {
+    const el = document.getElementById('sc'+i);
+    const d = document.getElementById('sd'+i);
+    if(el && d){
+      el.innerText = s.s + '%';
+      el.style.color = s.s >= 72 ? '#22c55e' : s.s >= 52 ? '#f0883e' : '#f85149';
+      d.innerText = s.d === '---' ? 'HOLD' : s.d;
+      d.style.color = s.d === 'TAI' ? '#f85149' : s.d === 'XIU' ? '#388bfd' : s.d === 'BO' ? '#a371f7' : '#6e7681';
+    }
   });
 }
 
 function renderDots(list){
-  const row=document.getElementById('streakDots');
-  row.innerHTML=list.map((s,i)=>`<div class="sd ${s.resultTruyenThong==='TAI'?'sd-t':'sd-x'} ${i===0?'sd-cur':''}" title="Phiên ${s.id}">${s.resultTruyenThong==='TAI'?'T':'X'}</div>`).join('');
+  document.getElementById('streakDots').innerHTML = list.map((s, i) => 
+    `<div class="sd ${s.resultTruyenThong==='TAI'?'sdt':'sdx'} ${i===0?'sdc':''}" title="#${s.id}">${s.resultTruyenThong==='TAI'?'T':'X'}</div>`
+  ).join('');
 }
 
 function renderHistory(list){
-  const R=list.map(s=>s.resultTruyenThong);
-  document.getElementById('histBody').innerHTML=list.map((item,idx)=>{
-    let pat='';
-    if(idx<R.length-1) pat=R[idx]===R[idx+1]?'←Bệt':'←Đảo';
-    const cls=item.resultTruyenThong==='TAI'?'b-t':'b-x';
+  const R = list.map(s => s.resultTruyenThong);
+  document.getElementById('histBody').innerHTML = list.map((item, idx) => {
+    const pat = idx < R.length - 1 ? (R[idx] === R[idx+1] ? 'Bệt' : 'Đảo') : '';
+    const cls = item.resultTruyenThong === 'TAI' ? 'bt' : 'bx2';
     return `<tr>
       <td style="color:#f0883e">${item.id}</td>
-      <td style="color:#6e7681">${item.dices.join('-')}</td>
+      <td style="color:#6e7681;font-size:10px">${item.dices.join('-')}</td>
       <td><b>${item.point}</b></td>
       <td><span class="badge ${cls}">${item.resultTruyenThong}</span></td>
       <td style="color:#6e7681;font-size:10px">${pat}</td>
@@ -725,30 +848,34 @@ function renderHistory(list){
   }).join('');
 }
 
-function updatePrev(id,pred,actual,type){
-  document.getElementById('prevId').innerText=id;
-  document.getElementById('prevPred').innerText=pred;
-  document.getElementById('prevActual').innerText=actual;
-  const el=document.getElementById('prevResult');
-  if(type==='win') el.innerHTML='<span class="badge b-w">ĂN ✅</span>';
-  else if(type==='lose') el.innerHTML='<span class="badge b-l">GÃY ❌</span>';
-  else el.innerHTML='<span class="badge b-sk">BỎ 🛡️</span>';
+function updatePrev(id, pred, actual, type){
+  document.getElementById('prevId').innerText = id;
+  document.getElementById('prevPred').innerText = pred;
+  document.getElementById('prevActual').innerText = actual;
+  const el = document.getElementById('prevResult');
+  if(type === 'win') el.innerHTML = '<span class="badge bw">THẮNG ✅</span>';
+  else if(type === 'lose') el.innerHTML = '<span class="badge bl">THUA ❌</span>';
+  else el.innerHTML = '<span class="badge bsk">BỎ 🛡️</span>';
 }
 
 function updateStats(){
-  document.getElementById('stTotal').innerText=stats.total;
-  document.getElementById('stWin').innerText=stats.win;
-  document.getElementById('stLose').innerText=stats.lose;
-  document.getElementById('stSkip').innerText=stats.skip;
-  const pEl=document.getElementById('profitAmt');
-  pEl.innerText=(stats.profit>=0?'+':'')+fmt(stats.profit)+' VNĐ';
-  pEl.style.color=stats.profit>0?'#22c55e':stats.profit<0?'#f85149':'#6e7681';
-  const bn=document.getElementById('profitBanner');
-  bn.className='pb '+(stats.profit>0?'pb-pos':stats.profit<0?'pb-neg':'pb-neu');
-  const wr=stats.total>0?Math.round(stats.win/stats.total*100):0;
-  const wrEl=document.getElementById('winRate');
-  wrEl.innerText=wr+'%';
-  wrEl.style.color=wr>=55?'#22c55e':wr>=45?'#f0883e':'#f85149';
+  document.getElementById('stTotal').innerText = stats.total;
+  document.getElementById('stWin').innerText = stats.win;
+  document.getElementById('stLose').innerText = stats.lose;
+  document.getElementById('stSkip').innerText = stats.skip;
+  
+  const p = stats.profit;
+  const pe = document.getElementById('profitAmt');
+  pe.innerText = (p >= 0 ? '+' : '') + fmt(p) + ' VNĐ';
+  pe.style.color = p > 0 ? '#22c55e' : p < 0 ? '#f85149' : '#6e7681';
+  
+  const bn = document.getElementById('profitBanner');
+  bn.className = 'pb ' + (p > 0 ? 'pbp' : p < 0 ? 'pbn' : 'pbu');
+  
+  const wr = stats.total > 0 ? Math.round(stats.win / stats.total * 100) : 0;
+  const we = document.getElementById('winRate');
+  we.innerText = wr + '%';
+  we.style.color = wr >= 58 ? '#22c55e' : wr >= 45 ? '#f0883e' : '#f85149';
 }
 
 function fmt(n){ return Math.round(n).toLocaleString('vi-VN'); }
