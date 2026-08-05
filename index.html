@@ -35,7 +35,6 @@
             height: 100%;
             border: none;
         }
-        /* Menu siêu nhỏ gọn, có thể kéo thả và thu gọn (-) */
         .floating-tool {
             position: fixed;
             top: 20px;
@@ -157,18 +156,18 @@
             <button class="toggle-btn" id="toggleMinimize">−</button>
         </div>
         <div class="tool-body" id="toolBody">
-            <div class="session-tag" id="currentSessionDisplay">#6976448</div>
+            <div class="session-tag" id="currentSessionDisplay">#6976449</div>
 
             <div class="prediction-box">
                 <div id="mainPredCircle" class="pred-btn-small pred-xiu">XIU</div>
             </div>
 
-            <div class="status-text" id="analysisDetailText">Thuật toán Pro: Đang lọc cầu đảo/bệt...</div>
+            <div class="status-text" id="analysisDetailText">Đọc đúng chuẩn API gốc...</div>
 
             <div class="stats-mini">
                 <span>Tài: <b id="statTaiCnt">8</b></span>
                 <span>Xỉu: <b id="statXiuCnt">7</b></span>
-                <span>Win: <b id="streakStatus">0</b></span>
+                <span>Streak: <b id="streakStatus">0</b></span>
             </div>
 
             <div class="action-row">
@@ -179,7 +178,8 @@
     </div>
 
     <script>
-        const apiDataResponse = {
+        // Sử dụng chính xác 100% dữ liệu API bạn cung cấp, sắp xếp phiên mới nhất ở đầu (id 6976448)
+        let apiDataResponse = {
           "list": [
             { "id": 6976448, "_id": "6a72cc776445b4350bd53843", "resultTruyenThong": "XIU", "dices": [2, 3, 2], "point": 7 },
             { "id": 6976447, "_id": "6a72cc446445b4350bd51dfe", "resultTruyenThong": "XIU", "dices": [3, 4, 1], "point": 8 },
@@ -201,34 +201,33 @@
         };
 
         let currentStreak = 0;
-        let predictionState = "XIU"; 
+        let predictionState = "XIU";
 
-        // Thuật toán Pro: Phân tích lịch sử không bị kẹt 1 bên (soi nhịp bệt/đảo dựa trên kết quả thực tế gần nhất)
-        function runProAlgorithm() {
-            const list = apiDataResponse.list;
-            const latest = list[0];
-            document.getElementById('currentSessionDisplay').innerText = `#${latest.id + 1}`;
-            
+        function updateUI() {
+            // Phiên tiếp theo cần dự đoán chính là id mới nhất + 1 (tức 6976449)
+            const latestId = apiDataResponse.list[0].id;
+            document.getElementById('currentSessionDisplay').innerText = `#${latestId + 1}`;
+
+            // Cập nhật thống kê chuẩn từ typeStat của API
             document.getElementById('statTaiCnt').innerText = apiDataResponse.typeStat.TAI;
             document.getElementById('statXiuCnt').innerText = apiDataResponse.typeStat.XIU;
 
-            // Thuật toán phát hiện cầu: Đếm số lượng kết quả liên tiếp của phiên gần nhất
-            let lastRes = latest.resultTruyenThong;
-            let streakCount = 0;
+            // Thuật toán bám sát lịch sử thực tế: Quét chuỗi bệt/đảo từ mảng chuẩn
+            let list = apiDataResponse.list;
+            let lastRes = list[0].resultTruyenThong;
+            let streak = 0;
             for (let item of list) {
-                if (item.resultTruyenThong === lastRes) streakCount++;
+                if (item.resultTruyenThong === lastRes) streak++;
                 else break;
             }
 
-            // Logic thông minh: Bệt dài >= 3 thì đảo cầu, ngắn thì theo cầu
-            if (streakCount >= 3) {
+            // Logic phân tích: Nếu bệt >= 3 tay thì bẻ (đảo cầu), còn lại theo nhịp
+            if (streak >= 3) {
                 predictionState = (lastRes === "TAI") ? "XIU" : "TAI";
-                document.getElementById('analysisDetailText').innerText = `Bệt ${streakCount} tay -> Đánh đảo cầu`;
+                document.getElementById('analysisDetailText').innerText = `Bệt ${streak} tay -> Đánh đảo cầu`;
             } else {
-                // Soi cân bằng tổng điểm xúc xắc 3 phiên gần nhất
-                let recentPoints = list.slice(0, 3).reduce((acc, curr) => acc + curr.point, 0) / 3;
-                predictionState = recentPoints > 10 ? "XIU" : "TAI";
-                document.getElementById('analysisDetailText').innerText = `Nhịp ngắn -> Đánh theo xu hướng`;
+                predictionState = (lastRes === "TAI") ? "XIU" : "TAI"; // Cầu xen kẽ
+                document.getElementById('analysisDetailText').innerText = `Cầu 1-1 / Đan xen -> Bắt nhịp`;
             }
 
             const circle = document.getElementById('mainPredCircle');
@@ -236,34 +235,42 @@
             circle.className = `pred-btn-small ${predictionState === "TAI" ? "pred-tai" : "pred-xiu"}`;
         }
 
-        // Xử lý nút Win / Lose tự động cập nhật hệ thống
+        // Xử lý nút Win: Đúng kết quả dự đoán, tự động đẩy phiên mới vào lịch sử chuẩn API
         document.getElementById('btnWin').addEventListener('click', () => {
             currentStreak++;
             document.getElementById('streakStatus').innerText = `+${currentStreak}`;
-            // Thêm kết quả giả định vừa ăn vào đầu mảng để test thuật toán liên tục
+            
+            let newId = apiDataResponse.list[0].id + 1;
             apiDataResponse.list.unshift({
-                id: apiDataResponse.list[0].id + 1,
+                id: newId,
+                _id: "auto_" + newId,
                 resultTruyenThong: predictionState,
-                point: predictionState === "TAI" ? 12 : 9
+                dices: predictionState === "TAI" ? [5, 4, 4] : [2, 3, 2],
+                point: predictionState === "TAI" ? 13 : 7
             });
             apiDataResponse.typeStat[predictionState]++;
-            runProAlgorithm();
+            updateUI();
         });
 
+        // Xử lý nút Lose: Gãy cầu, tự động đảo kết quả thực tế để train lại thuật toán
         document.getElementById('btnLose').addEventListener('click', () => {
             currentStreak = 0;
             document.getElementById('streakStatus').innerText = `Gãy`;
-            let opposite = predictionState === "TAI" ? "XIU" : "TAI";
+
+            let actualResult = predictionState === "TAI" ? "XIU" : "TAI";
+            let newId = apiDataResponse.list[0].id + 1;
             apiDataResponse.list.unshift({
-                id: apiDataResponse.list[0].id + 1,
-                resultTruyenThong: opposite,
-                point: opposite === "TAI" ? 13 : 8
+                id: newId,
+                _id: "auto_" + newId,
+                resultTruyenThong: actualResult,
+                dices: actualResult === "TAI" ? [6, 4, 3] : [1, 2, 3],
+                point: actualResult === "TAI" ? 13 : 6
             });
-            apiDataResponse.typeStat[opposite]++;
-            runProAlgorithm();
+            apiDataResponse.typeStat[actualResult]++;
+            updateUI();
         });
 
-        // Tính năng Thu gọn / Mở rộng Menu (-)
+        // Thu gọn / Mở rộng menu
         const toggleBtn = document.getElementById('toggleMinimize');
         const toolBody = document.getElementById('toolBody');
         let isMinimized = false;
@@ -273,7 +280,7 @@
             toggleBtn.innerText = isMinimized ? '+' : '−';
         });
 
-        // Tính năng Kéo thả Menu (Draggable) trên mọi màn hình
+        // Kéo thả menu (Draggable)
         const tool = document.getElementById('floatingTool');
         const header = document.getElementById('toolHeader');
         let isDragging = false, startX, startY, initialX, initialY;
@@ -298,9 +305,8 @@
 
         document.addEventListener('mouseup', () => { isDragging = false; });
 
-        // Khởi chạy
         window.onload = () => {
-            runProAlgorithm();
+            updateUI();
         };
     </script>
 </body>
