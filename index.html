@@ -1,40 +1,32 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MD5 Super Pattern Analyzer & lc79b.bet</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-base: #07090e;
-            --border-color: #374151;
-            --tai-color: #ef4444;
-            --xiu-color: #3b82f6;
-            --text-main: #f9fafb;
-            --text-muted: #9ca3af;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background-color: var(--bg-base);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            height: 100vh;
-            display: flex;
-            overflow: hidden;
-            user-select: none;
-        }
-        .game-container {
-            flex: 1;
-            height: 100%;
-            position: relative;
-            background: #000;
-        }
-        .game-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+<meta charset="UTF-8">
+<title>Lấy Key</title>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const start = params.get('start');
+  const bot = params.get('bot');
+  if (bot && start) {
+    window.location.href = `tg://resolve?domain=${bot}&start=${start}`;
+    setTimeout(() => {
+      window.location.href = `https://t.me/${bot}?start=${start}`;
+    }, 1500);
+  }
+</script>
+</head>
+<body>
+<p style="font-family:sans-serif;text-align:center;margin-top:40px">
+  Đang chuyển hướng về Telegram...<br>
+  <a id="link" href="#">Bấm đây nếu không tự chuyển</a>
+</p>
+<script>
+  const a = document.getElementById('link');
+  const params2 = new URLSearchParams(window.location.search);
+  a.href = `https://t.me/${params2.get('bot')}?start=${params2.get('start')}`;
+</script>
+</body>
+</html>        }
         .floating-tool {
             position: fixed;
             top: 20px;
