@@ -1,303 +1,136 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-import time
-import json
-import sqlite3
-import hashlib
-import urllib.request
-import urllib.parse
-from datetime import datetime
-
-# ================= CẤU HÌNH =================
-BOT_TOKEN      = "8505581124:AAF9ERm57hPuB9XD6kGOJzoTlSW30uC9gds"
-BOT_USERNAME   = "KimQuynh_Bot"  # không có @
-SECRET_SALT    = "AntiGravityKeySecret2026"
-DB_FILE        = "keys.db"
-REDIRECT_BASE  = "https://github.com/vanbaocheater/online/blob/main/index.html"
-TELEGRAM_API_BASE = f"https://api.telegram.org/bot{BOT_TOKEN}"
-
-LAYMA_USER_TOKEN   = "a4e1b5ccf1056c6625dbb99a5ed54d15"
-LAYMA_API_ENDPOINT = "https://api.layma.net/api/admin/shortlink/quicklink"
-
-# ================= DATABASE =================
-def init_db():
-    conn = sqlite3.connect(DB_FILE)
-    c = conn.cursor()
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS user_keys (
-            user_id    INTEGER PRIMARY KEY,
-            username   TEXT,
-            key        TEXT NOT NULL,
-            created_at INTEGER NOT NULL,
-            expires_at INTEGER NOT NULL,
-            revealed   INTEGER NOT NULL DEFAULT 0
-        )
-    ''')
-    # migrate db cũ chưa có cột revealed
-    try:
-        c.execute('ALTER TABLE user_keys ADD COLUMN revealed INTEGER NOT NULL DEFAULT 0')
-    except Exception:
-        pass
-    conn.commit()
-    conn.close()
-
-def save_user_key(user_id, username, key, created_at, expires_at):
-    conn = sqlite3.connect(DB_FILE)
-    c = conn.cursor()
-    c.execute('''
-        INSERT INTO user_keys (user_id, username, key, created_at, expires_at, revealed)
-        VALUES (?, ?, ?, ?, ?, 0)
-        ON CONFLICT(user_id) DO UPDATE SET
-            username   = excluded.username,
-            key        = excluded.key,
-            created_at = excluded.created_at,
-            expires_at = excluded.expires_at,
-            revealed   = 0
-    ''', (user_id, username, key, created_at, expires_at))
-    conn.commit()
-    conn.close()
-
-def get_user_key(user_id):
-    conn = sqlite3.connect(DB_FILE)
-    c = conn.cursor()
-    c.execute('SELECT key, created_at, expires_at, revealed FROM user_keys WHERE user_id = ?', (user_id,))
-    row = c.fetchone()
-    conn.close()
-    if row:
-        return {"key": row[0], "created_at": row[1], "expires_at": row[2], "revealed": row[3]}
-    return None
-
-def mark_revealed(user_id):
-    conn = sqlite3.connect(DB_FILE)
-    c = conn.cursor()
-    c.execute('UPDATE user_keys SET revealed = 1 WHERE user_id = ?', (user_id,))
-    conn.commit()
-    conn.close()
-
-# ================= TẠO KEY =================
-def generate_1day_key():
-    created_at = int(time.time())
-    created_at = created_at - (created_at % 60)  # làm tròn 60s cho C++ scan nhanh
-    expires_at = created_at + 86400
-    raw = f"{created_at}{SECRET_SALT}{expires_at}"
-    key_hash = hashlib.sha256(raw.encode()).hexdigest()[:24].upper()
-    key_str = f"AG-{key_hash[:6]}-{key_hash[6:12]}-{key_hash[12:18]}-{key_hash[18:24]}"
-    return key_str, created_at, expires_at
-
-# ================= RÚT GỌN LINK =================
-def shorten_link_layma(target_url):
-    try:
-        params = {
-            "tokenUser": LAYMA_USER_TOKEN,
-            "format": "json",
-            "url": target_url,
-            "link_du_phong": target_url
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đang chuyển hướng về Telegram...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
-        api_url = f"{LAYMA_API_ENDPOINT}?{urllib.parse.urlencode(params)}"
-        req = urllib.request.Request(api_url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req, timeout=10) as response:
-            res_data = response.read().decode('utf-8')
-            try:
-                res_json = json.loads(res_data)
-                if isinstance(res_json, dict):
-                    for field in ("shortlink", "shortenedUrl", "url"):
-                        if res_json.get(field):
-                            return res_json[field]
-                    data = res_json.get("data", {})
-                    if isinstance(data, dict):
-                        for field in ("shortlink", "url"):
-                            if data.get(field):
-                                return data[field]
-            except Exception:
-                if res_data.startswith("http"):
-                    return res_data.strip()
-    except Exception as e:
-        print(f"Lỗi Layma API: {e}")
-        # fallback TinyURL
-        try:
-            tiny = f"https://tinyurl.com/api-create.php?url={urllib.parse.quote(target_url)}"
-            req2 = urllib.request.Request(tiny, headers={'User-Agent': 'Mozilla/5.0'})
-            with urllib.request.urlopen(req2, timeout=10) as r:
-                short = r.read().decode('utf-8').strip()
-                if short.startswith("http"):
-                    return short
-        except Exception as e2:
-            print(f"Lỗi TinyURL fallback: {e2}")
-    return target_url
 
-def get_reveal_link(user_id):
-    # trỏ tới GitHub Pages redirect → tg:// deep link mở thẳng app Telegram
-    target = f"{REDIRECT_BASE}?bot={BOT_USERNAME}&start=reveal_{user_id}"
-    return shorten_link_layma(target)
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-# ================= GỬI TIN NHẮN =================
-def send_message(chat_id, text, parse_mode="HTML"):
-    url = f"{TELEGRAM_API_BASE}/sendMessage"
-    payload = {"chat_id": chat_id, "text": text, "parse_mode": parse_mode}
-    data = json.dumps(payload).encode('utf-8')
-    req = urllib.request.Request(
-        url, data=data,
-        headers={'Content-Type': 'application/json'}
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=10):
-            pass
-    except Exception as e:
-        print(f"Lỗi gửi tin nhắn: {e}")
+        .container {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            border: 1px solid #334155;
+        }
 
-def format_time(ts):
-    return datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #334155;
+            border-top: 5px solid #38bdf8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px auto;
+        }
 
-# ================= XỬ LÝ LỆNH =================
-def handle_command(chat_id, user_id, username, command_text):
-    now   = int(time.time())
-    parts = command_text.strip().split()
-    cmd   = parts[0].lower()
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-    # /start reveal_USERID
-    if cmd == "/start" and len(parts) > 1 and parts[1].startswith("reveal_"):
-        try:
-            target_uid = int(parts[1].replace("reveal_", ""))
-        except ValueError:
-            send_message(chat_id, "❌ Link không hợp lệ.")
-            return
+        h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #f1f5f9;
+        }
 
-        if target_uid != user_id:
-            send_message(chat_id, "❌ Link này không dành cho bạn.")
-            return
+        p {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
 
-        record = get_user_key(user_id)
-        if not record:
-            send_message(chat_id, "❌ Không tìm thấy Key. Nhập /getkey để tạo mới.")
-            return
-        if now >= record["expires_at"]:
-            send_message(chat_id, "⚠️ Key đã <b>hết hạn</b>. Nhập /getkey để tạo mới!")
-            return
+        .btn {
+            display: inline-block;
+            background-color: #0284c7;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: background-color 0.2s ease;
+            width: 100%;
+        }
 
-        mark_revealed(user_id)
-        rem  = record["expires_at"] - now
-        h, m = rem // 3600, (rem % 3600) // 60
-        msg = (
-            "✅ <b>Vượt link thành công!</b>\n\n"
-            "🔑 <b>Key của bạn:</b>\n"
-            f"<code>{record['key']}</code>\n\n"
-            f"⏱️ Còn lại: <b>{h} giờ {m} phút</b>\n"
-            "📌 Dán Key vào Mod Menu để đăng nhập!"
-        )
-        send_message(chat_id, msg)
-        return
+        .btn:hover {
+            background-color: #0369a1;
+        }
 
-    # /start thường
-    if cmd == "/start":
-        msg = (
-            "🤖 <b>HỆ THỐNG XÁC THỰC KEY MOD MENU</b>\n\n"
-            "📋 <b>Danh sách câu lệnh:</b>\n"
-            "🔹 /getkey — Tạo link vượt mã lấy Key (24 giờ)\n"
-            "🔹 /mykey — Kiểm tra Key và thời hạn còn lại\n"
-            "🔹 /help — Xem hướng dẫn sử dụng\n\n"
-            "💡 Nhập /getkey để bắt đầu."
-        )
-        send_message(chat_id, msg)
-        return
+        .error-message {
+            color: #ef4444;
+            display: none;
+        }
+    </style>
+</head>
+<body>
 
-    if cmd == "/help":
-        msg = (
-            "📖 <b>HƯỚNG DẪN SỬ DỤNG</b>\n\n"
-            "1️⃣ Nhập /getkey\n"
-            "2️⃣ Bot gửi link rút gọn — bấm vào và vượt quảng cáo\n"
-            "3️⃣ Sau khi vượt xong trang tự chuyển về Telegram\n"
-            "4️⃣ Bot tự động gửi Key\n"
-            "5️⃣ Copy Key dán vào Mod Menu\n\n"
-            "⚠️ Key có dạng: <code>AG-XXXXXX-XXXXXX-XXXXXX-XXXXXX</code>\n"
-            "⏰ Thời hạn: 24 giờ"
-        )
-        send_message(chat_id, msg)
+    <div class="container">
+        <div class="spinner" id="loader"></div>
+        <h2 id="status-title">Xác thực thành công!</h2>
+        <p id="status-desc">Hệ thống đang chuyển hướng bạn quay lại Telegram để nhận Key...</p>
+        
+        <a id="telegram-btn" href="#" class="btn" style="display: none;">Mở Telegram Nhận Key</a>
+    </div>
 
-    elif cmd == "/getkey":
-        existing = get_user_key(user_id)
-        if existing and existing["expires_at"] > now:
-            rem  = existing["expires_at"] - now
-            h, m = rem // 3600, (rem % 3600) // 60
-            if existing["revealed"] == 0:
-                short_link = get_reveal_link(user_id)
-                msg = (
-                    "⚠️ <b>Bạn đã có Key nhưng chưa vượt link!</b>\n\n"
-                    f"🔗 Vượt link này để lấy Key:\n{short_link}\n\n"
-                    f"⏳ Còn lại: <b>{h} giờ {m} phút</b>"
-                )
-            else:
-                msg = (
-                    "⚠️ <b>Bạn đã có Key còn hạn!</b>\n\n"
-                    f"⏳ Còn lại: <b>{h} giờ {m} phút</b>\n"
-                    "Dùng /mykey để xem Key."
-                )
-            send_message(chat_id, msg)
-            return
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Lấy tham số từ URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const botUsername = urlParams.get('bot');
+            const startParam = urlParams.get('start');
 
-        key_str, created_at, expires_at = generate_1day_key()
-        save_user_key(user_id, username, key_str, created_at, expires_at)
-        short_link = get_reveal_link(user_id)
+            const loader = document.getElementById('loader');
+            const statusTitle = document.getElementById('status-title');
+            const statusDesc = document.getElementById('status-desc');
+            const telegramBtn = document.getElementById('telegram-btn');
 
-        msg = (
-            "🎉 <b>Yêu Cầu Tạo Key Thành Công!</b>\n\n"
-            f"🔗 <b>Vượt link bên dưới để lấy Key:</b>\n{short_link}\n\n"
-            "⚠️ Vượt xong trang tự chuyển về Telegram!\n"
-            "⏰ Key có thời hạn 24 giờ."
-        )
-        send_message(chat_id, msg)
+            if (botUsername && startParam) {
+                // Tạo liên kết sâu (deep link) tới Telegram Bot
+                const tgUrl = `https://t.me/${botUsername}?start=${startParam}`;
 
-    elif cmd == "/mykey":
-        existing = get_user_key(user_id)
-        if not existing:
-            send_message(chat_id, "❌ Chưa có Key. Nhập /getkey để tạo!")
-            return
-        exp = existing["expires_at"]
-        if now >= exp:
-            send_message(chat_id, "⚠️ Key đã <b>hết hạn</b>. Nhập /getkey để tạo mới!")
-        elif existing["revealed"] == 0:
-            send_message(chat_id, "⚠️ Bạn chưa vượt link! Nhập /getkey để lấy lại link.")
-        else:
-            rem  = exp - now
-            h, m = rem // 3600, (rem % 3600) // 60
-            msg = (
-                "🔑 <b>THÔNG TIN KEY CỦA BẠN</b>\n\n"
-                f"🔹 Key: <code>{existing['key']}</code>\n"
-                f"📅 Ngày tạo: <code>{format_time(existing['created_at'])}</code>\n"
-                f"⌛ Hết hạn: <code>{format_time(exp)}</code>\n"
-                f"⏱️ Còn lại: <b>{h} giờ {m} phút</b>\n"
-                "✅ Trạng thái: Hoạt động"
-            )
-            send_message(chat_id, msg)
-    else:
-        send_message(chat_id, "❓ Lệnh không hợp lệ. Nhập /help để xem danh sách.")
+                // Cập nhật nút phòng trường hợp trình duyệt chặn tự động chuyển hướng
+                telegramBtn.href = tgUrl;
 
-# ================= LONG POLLING =================
-def run_bot():
-    init_db()
-    print("🤖 Bot đang chạy...")
-    offset = 0
-    while True:
-        try:
-            url = f"{TELEGRAM_API_BASE}/getUpdates?offset={offset}&timeout=30"
-            req = urllib.request.Request(url)
-            with urllib.request.urlopen(req, timeout=35) as res:
-                data = json.loads(res.read().decode('utf-8'))
-                if data.get("ok"):
-                    for update in data.get("result", []):
-                        offset = update["update_id"] + 1
-                        message = update.get("message")
-                        if not message or "text" not in message:
-                            continue
-                        chat_id  = message["chat"]["id"]
-                        user_id  = message["from"]["id"]
-                        username = message["from"].get("username", "")
-                        text     = message.get("text", "")
-                        if text.startswith("/"):
-                            handle_command(chat_id, user_id, username, text)
-        except Exception as e:
-            print(f"Lỗi polling: {e}")
-            time.sleep(3)
+                // Tự động chuyển hướng sau 1.5 giây
+                setTimeout(() => {
+                    window.location.href = tgUrl;
+                    
+                    // Hiển thị nút bấm thủ công nếu tự động chuyển hướng bị chặn
+                    loader.style.display = 'none';
+                    statusDesc.innerText = "Nếu ứng dụng không tự động mở, vui lòng bấm vào nút bên dưới:";
+                    telegramBtn.style.display = 'block';
+                }, 1500);
 
-if __name__ == "__main__":
-    run_bot()
+            } else {
+                // Trường hợp URL thiếu tham số
+                loader.style.display = 'none';
+                statusTitle.innerText = "❌ Lỗi Tham Số";
+                statusTitle.style.color = "#ef4444";
+                statusDesc.innerText = "Link truy cập không hợp lệ hoặc thiếu thông tin xác thực.";
+            }
+        });
+    </script>
+</body>
+</html>
