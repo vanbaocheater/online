@@ -3,132 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đang chuyển hướng về Telegram...</title>
+    <title>Xác Thực Thành Công - Get Key System</title>
+    <!-- FontAwesome 6.5 & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
+        :root {
+            --primary: #0088cc;
+            --primary-glow: rgba(0, 136, 204, 0.4);
+            --accent: #22c55e;
+            --accent-glow: rgba(34, 197, 94, 0.3);
+            --bg-dark: #0b0f19;
+            --card-bg: rgba(20, 27, 45, 0.75);
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --error: #ef4444;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         body {
-            background-color: #0f172a;
-            color: #f8fafc;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
+            overflow: hidden;
+            position: relative;
         }
 
-        .container {
-            background: #1e293b;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            max-width: 400px;
+        /* Nền hiệu ứng Ambient Glow */
+        .ambient-bg {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, rgba(0,0,0,0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            filter: blur(50px);
+            animation: pulseGlow 4s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.9; }
+        }
+
+        /* Thẻ Card Hiệu Ứng Glassmorphism */
+        .card {
+            position: relative;
+            z-index: 10;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            padding: 40px 32px;
             width: 100%;
-            border: 1px solid #334155;
+            max-width: 440px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            animation: cardEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #334155;
-            border-top: 5px solid #38bdf8;
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Icon Container với Animation Ripple */
+        .icon-wrapper {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 24px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .icon-box {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 136, 204, 0.2), rgba(34, 197, 94, 0.2));
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 38px;
+            color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+            animation: iconFloat 3s ease-in-out infinite;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(34, 197, 94, 0.12);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: var(--accent);
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
         }
 
         h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #f1f5f9;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         p {
-            color: #94a3b8;
+            color: var(--text-sub);
             font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            line-height: 1.6;
+            margin-bottom: 28px;
+            font-weight: 400;
         }
 
+        /* Custom Progress Spinner & Timer */
+        .progress-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .spinner {
+            width: 44px;
+            height: 44px;
+            border: 3.5px solid rgba(255, 255, 255, 0.08);
+            border-top: 3.5px solid var(--primary);
+            border-right: 3.5px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        .countdown-text {
+            font-size: 13px;
+            color: var(--text-sub);
+            font-weight: 500;
+        }
+
+        .countdown-text span {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Button Đẹp Nổi Bật */
         .btn {
-            display: inline-block;
-            background-color: #0284c7;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
             color: #ffffff;
             text-decoration: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 15px;
-            transition: background-color 0.2s ease;
-            width: 100%;
+            padding: 16px 24px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 25px -5px var(--primary-glow);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
         }
 
         .btn:hover {
-            background-color: #0369a1;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px -5px rgba(0, 136, 204, 0.6);
+            background: linear-gradient(135deg, #0099ee 0%, #0077bb 100%);
         }
 
-        .error-message {
-            color: #ef4444;
-            display: none;
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn i {
+            font-size: 20px;
+        }
+
+        /* Lỗi State */
+        .error-state .icon-box {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--error);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        .error-state .status-badge {
+            background: rgba(239, 68, 68, 0.12);
+            color: var(--error);
+            border-color: rgba(239, 68, 68, 0.3);
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="spinner" id="loader"></div>
-        <h2 id="status-title">Xác thực thành công!</h2>
-        <p id="status-desc">Hệ thống đang chuyển hướng bạn quay lại Telegram để nhận Key...</p>
-        
-        <a id="telegram-btn" href="#" class="btn" style="display: none;">Mở Telegram Nhận Key</a>
+    <div class="ambient-bg"></div>
+
+    <div class="card" id="main-card">
+        <div class="icon-wrapper">
+            <div class="icon-box" id="icon-box">
+                <i class="fa-solid fa-shield-check"></i>
+            </div>
+        </div>
+
+        <div class="status-badge" id="status-badge">
+            <i class="fa-solid fa-circle-check"></i> Vượt Link Thành Công
+        </div>
+
+        <h2 id="title">Đang Kích Hoạt Key...</h2>
+        <p id="desc">Hệ thống đang xác thực dữ liệu và chuẩn bị tự động chuyển hướng về Telegram để gửi Key.</p>
+
+        <div class="progress-box" id="progress-box">
+            <div class="spinner"></div>
+            <div class="countdown-text">Tự động mở trong <span id="timer">2</span> giây</div>
+        </div>
+
+        <a href="#" class="btn" id="redirect-btn">
+            <i class="fa-brands fa-telegram"></i> Mở Telegram Nhận Key
+        </a>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Lấy tham số từ URL
             const urlParams = new URLSearchParams(window.location.search);
             const botUsername = urlParams.get('bot');
             const startParam = urlParams.get('start');
 
-            const loader = document.getElementById('loader');
-            const statusTitle = document.getElementById('status-title');
-            const statusDesc = document.getElementById('status-desc');
-            const telegramBtn = document.getElementById('telegram-btn');
+            const mainCard = document.getElementById('main-card');
+            const iconBox = document.getElementById('icon-box');
+            const statusBadge = document.getElementById('status-badge');
+            const title = document.getElementById('title');
+            const desc = document.getElementById('desc');
+            const progressBox = document.getElementById('progress-box');
+            const redirectBtn = document.getElementById('redirect-btn');
+            const timerEl = document.getElementById('timer');
 
             if (botUsername && startParam) {
-                // Tạo liên kết sâu (deep link) tới Telegram Bot
-                const tgUrl = `https://t.me/${botUsername}?start=${startParam}`;
+                const tgDeepLink = `https://t.me/${botUsername}?start=${startParam}`;
 
-                // Cập nhật nút phòng trường hợp trình duyệt chặn tự động chuyển hướng
-                telegramBtn.href = tgUrl;
+                // 1. Lưu thông tin vào localStorage của trình duyệt
+                const userId = startParam.replace('reveal_', '');
+                localStorage.setItem(`key_verified_${userId}`, JSON.stringify({
+                    verified: true,
+                    timestamp: new Date().getTime()
+                }));
 
-                // Tự động chuyển hướng sau 1.5 giây
-                setTimeout(() => {
-                    window.location.href = tgUrl;
-                    
-                    // Hiển thị nút bấm thủ công nếu tự động chuyển hướng bị chặn
-                    loader.style.display = 'none';
-                    statusDesc.innerText = "Nếu ứng dụng không tự động mở, vui lòng bấm vào nút bên dưới:";
-                    telegramBtn.style.display = 'block';
-                }, 1500);
+                redirectBtn.href = tgDeepLink;
+
+                // 2. Đồng hồ đếm ngược tự chuyển hướng
+                let timeLeft = 2;
+                const countdownInterval = setInterval(() => {
+                    timeLeft--;
+                    if (timeLeft >= 0) {
+                        timerEl.innerText = timeLeft;
+                    }
+                    if (timeLeft <= 0) {
+                        clearInterval(countdownInterval);
+                        window.location.href = tgDeepLink;
+
+                        // Hiện nút bấm phòng trường hợp trình duyệt chặn popup auto-open
+                        setTimeout(() => {
+                            progressBox.style.display = 'none';
+                            redirectBtn.style.display = 'flex';
+                            title.innerText = "Sẵn Sàng Nhận Key!";
+                            desc.innerText = "Nếu ứng dụng Telegram không tự mở, vui lòng bấm vào nút bên dưới:";
+                        }, 500);
+                    }
+                }, 1000);
 
             } else {
-                // Trường hợp URL thiếu tham số
-                loader.style.display = 'none';
-                statusTitle.innerText = "❌ Lỗi Tham Số";
-                statusTitle.style.color = "#ef4444";
-                statusDesc.innerText = "Link truy cập không hợp lệ hoặc thiếu thông tin xác thực.";
+                // Xử lý khi đường link không có đủ tham số xác thực
+                mainCard.classList.add('error-state');
+                progressBox.style.display = 'none';
+                statusBadge.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Xác Thực Thất Bại';
+                iconBox.innerHTML = '<i class="fa-solid fa-lock-keyhole-exclamation"></i>';
+                title.innerText = "Liên Kết Không Hợp Lệ";
+                desc.innerText = "Thiếu thông tin xác thực từ Telegram. Vui lòng quay lại Bot và lấy link mới.";
             }
         });
     </script>
